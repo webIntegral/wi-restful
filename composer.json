@@ -4,7 +4,7 @@
   "require" : {
     "php" : ">=5.3.3",
     "zendframework/zendframework" : "~2.4",
-    "doctrine/doctrine-orm-module" : "0.9.1"
+    "doctrine/doctrine-orm-module" : "0.*"
   },
   "license" : "BSD-3-Clause",
   "keywords" : [ "framework", "zf2" ],
