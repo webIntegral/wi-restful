@@ -15,7 +15,7 @@ return array(
                     'port'     => '3306',
                     'user'     => 'root',
                     'password' => '',
-                    'dbname'   => 'wi',
+                    'dbname'   => 'wi_restful',
                     'charset' => 'utf8',
                 )
             )
