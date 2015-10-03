@@ -17,14 +17,25 @@ class IndexController extends AbstractActionController
 {
     
     /**
-     * Doctrine Entity Manager
+     * Entity Manager
      * 
      * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
     
     /**
+     * Entity Manager Setter
+     * @param \Doctrine\ORM\EntityManager $em
+     * @return void
+     */
+    public function setEm(EntityManager $em) {
+        $this->em = $em;
+    }
+    
+    /**
      * Entity Manager Getter
+     * 
+     * Gets Doctrine Entity Manager from Service Locator
      * 
      * @return \Doctrine\ORM\EntityManager
      */
@@ -35,10 +46,17 @@ class IndexController extends AbstractActionController
         return $this->em;
     }
     
+    /**
+     * Contacts list view
+     */
     public function indexAction()
     {
+        // Get repository and all Contacts
+        $repo = $this->getEm()->getRepository('WiContacts\Entity\Contact');
+        $contacts = $repo->findAll();
+        
         return new ViewModel(array(
-            
+            'contacts' => $contacts
         ));
     }
     
