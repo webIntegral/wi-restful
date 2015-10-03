@@ -1,3 +1,35 @@
+<?php
+$title = 'Contacts';
+$this->headTitle($title);
+?>
 <strong>Module:</strong>        WiContacts &raquo;
 <strong>Controller:</strong>    Index &raquo;
 <strong>Action:</strong>        index
+
+<h1><?php echo $this->escapehtml($title); ?></h1>
+
+<a href="<?php echo $this->url('wi-contacts', array('action'=>'add'));?>">Add new Contact</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+        <?php foreach ( $contacts as $contact ) :?>
+
+            <tr>
+                <td><?php echo $this->escapehtml($contact->getId()); ?></td>
+                <td><?php echo $this->escapehtml($contact->getName()); ?></td>
+                <td><a href="<?php echo $this->url('wi-contacts', array('action'=>'view', 'id'=>$contact->getId())); ?>">View</a></td>
+                <td><a href="<?php echo $this->url('wi-contacts', array('action'=>'edit', 'id'=>$contact->getId())); ?>">Edit</a></td>
+                <td><a href="<?php echo $this->url('wi-contacts', array('action'=>'delete', 'id'=>$contact->getId())); ?>">Delete</a></td>
+            </tr>
+        
+        <?php endforeach; ?>
+        
+    </tbody>
+</table>
