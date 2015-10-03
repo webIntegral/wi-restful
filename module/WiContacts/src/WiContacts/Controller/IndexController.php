@@ -11,9 +11,30 @@ namespace WiContacts\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Doctrine\ORM\EntityManager; // @todo: Verificar si esta librería si es requerida
 
 class IndexController extends AbstractActionController
 {
+    
+    /**
+     * Doctrine Entity Manager
+     * 
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+    
+    /**
+     * Entity Manager Getter
+     * 
+     * @return \Doctrine\ORM\EntityManager
+     */
+    public function getEm() {
+        if (null === $this->em) {
+            $this->setEm($this->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
+        }
+        return $this->em;
+    }
+    
     public function indexAction()
     {
         return new ViewModel(array(
