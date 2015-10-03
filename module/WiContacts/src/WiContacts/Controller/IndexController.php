@@ -10,18 +10,42 @@
 namespace WiContacts\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return array();
+        return new ViewModel(array(
+            
+        ));
+    }
+    
+    public function viewAction()
+    {
+        return new ViewModel(array(
+        
+        ));
     }
 
-    public function fooAction()
+    public function addAction()
     {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /index/index/foo
-        return array();
+        return new ViewModel(array(
+            
+        ));
+    }
+    
+    public function editAction()
+    {
+        return new ViewModel(array(
+            
+        ));
+    }
+    
+    public function deleteAction()
+    {
+        return new ViewModel(array(
+            
+        ));
     }
 }
