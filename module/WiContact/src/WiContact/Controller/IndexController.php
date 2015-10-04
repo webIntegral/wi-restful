@@ -12,6 +12,8 @@ namespace WiContact\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Doctrine\ORM\EntityManager;
+use WiContact\Form\CreateContactForm;
+use WiContact\Entity\Contact;
 
 class IndexController extends AbstractActionController
 {
@@ -69,8 +71,34 @@ class IndexController extends AbstractActionController
 
     public function addAction()
     {
-        return new ViewModel(array(
+        // Get EntityManager
+        $em = $this->getEm();
+        
+        // Create the form and inject ObjectManager
+        $form = new CreateContactForm($em);
+        
+        // Create a new, empty entity and bind it to the form
+        $contact = new Contact();
+        $form->bind($contact);
+        
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
             
+            if ($form->isValid()) {
+                $em->persist($contact);
+                $em->flush();
+                
+                // Redirect to edit
+                $this->redirect()->toRoute('wi-contact', array(
+                    'controller' => 'index',
+                    'action' => 'edit',
+                    'id' => $contact->getId()
+                ));
+            }
+        }
+        
+        return new ViewModel(array(
+            'form' => $form
         ));
     }
     
