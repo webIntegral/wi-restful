@@ -11,7 +11,7 @@ class ContactFieldset extends Fieldset implements InputFilterProviderInterface {
     
     public function __construct(ObjectManager $objectManager)
     {
-        parent::__construct('contacts');
+        parent::__construct('contact');
         
         $this->setHydrator(new DoctrineHydrator($objectManager))
             ->setObject(new Contact());
@@ -21,7 +21,15 @@ class ContactFieldset extends Fieldset implements InputFilterProviderInterface {
             'name' => 'name'
         ));
         
-        // @todo: Poner aquí el fieldset con el formulario de relaciones muchos a muchos.
+        $phoneFieldset = new ContactPhoneFieldset($objectManager);
+        $this->add(array(
+            'type'  => 'Zend\Form\Element\Collection',
+            'name'  => 'phones',
+            'options' => array(
+                'count' => 2,
+                'target_element' => $phoneFieldset
+            )
+        ));
     }
     
     public function getInputFilterSpecification()
