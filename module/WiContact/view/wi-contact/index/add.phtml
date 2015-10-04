@@ -1,3 +1,32 @@
 <strong>Module:</strong>        WiContact &raquo;
 <strong>Controller:</strong>    Index &raquo;
 <strong>Action:</strong>        add
+
+<h1>Create Contact</h1>
+
+<?php
+
+    $form->setAttribute('action', $this->url('wi-contact', array('action'=>'add')))
+        ->prepare();
+    
+    echo $this->form()->openTag($form);
+    
+        $contactFieldset = $form->get('contact');
+        // $phoneFieldset = $form->get('phones');
+        
+        # echo $this->formHidden($form->get('security'));
+        
+        echo '<br>';
+        
+        //echo $this->formHidden($contactFieldset->get('id'));
+        echo $this->formRow($contactFieldset->get('id'));
+        
+        echo '<br>';
+        
+        echo $this->formRow($contactFieldset->get('name'));
+        
+        echo '<br>';
+        
+        echo $this->formInput($form->get('submit'));
+    
+    echo $this->form()->closeTag($form);
