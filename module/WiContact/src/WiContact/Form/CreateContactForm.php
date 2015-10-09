@@ -18,5 +18,24 @@ class CreateContactForm extends Form
         $contactFieldset = new ContactFieldset($objectManager);
         $contactFieldset->setUseAsBaseFieldset(true);
         $this->add($contactFieldset);
+        
+        // … add CSRF and submit elements …
+        
+        /*$this->add(array(
+         'name' => 'security',
+         'type' => 'Zend\Form\Element\Csrf'
+        ));*/
+        
+        
+        // Optionally set your validation group here
+        
+        $this->add(array(
+            'name' => 'submit',
+            'attributes' => array(
+                'type'  => 'submit',
+                'value' => 'Crear',
+                'id'    => 'submitbutton'
+            )
+        ));
     }
 }

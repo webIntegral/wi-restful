@@ -15,10 +15,21 @@ class ContactFieldset extends Fieldset implements InputFilterProviderInterface {
         
         $this->setHydrator(new DoctrineHydrator($objectManager))
             ->setObject(new Contact());
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Text',
+            'name' => 'id',
+            'options' => array(
+                'label' => 'ID'
+            )
+        ));
         
         $this->add(array(
             'type' => 'Zend\Form\Element\Text',
-            'name' => 'name'
+            'name' => 'name',
+            'options' => array(
+                'label' => 'Name'
+            )
         ));
         
         $phoneFieldset = new ContactPhoneFieldset($objectManager);
@@ -35,7 +46,7 @@ class ContactFieldset extends Fieldset implements InputFilterProviderInterface {
     public function getInputFilterSpecification()
     {
         return array(
-            'title' => array(
+            'name' => array(
                 'required' => true
             ),
         );

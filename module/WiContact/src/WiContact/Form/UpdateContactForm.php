@@ -18,5 +18,9 @@ class UpdateContactForm extends Form
         $contactFieldset = new ContactFieldset($objectManager);
         $contactFieldset->setUseAsBaseFieldset(true);
         $this->add($contactFieldset);
+        
+        // @todo … add CSRF and submit elements …
+        
+        // @todo Optionally set your validation group here
     }
 }
