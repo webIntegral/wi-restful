@@ -23,8 +23,9 @@ return array(
         'ZF\\Versioning',
         'ZF\\DevelopmentMode',
         'ZF\OAuth2\Doctrine',
+        'WiBase',
         'WiContact',
-        'WiContactAPI','WiBase',
+        'WiContactAPI',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
