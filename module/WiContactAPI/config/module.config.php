@@ -81,4 +81,20 @@ return array(
             ),
         ),
     ),
+    'doctrine' => array(
+        'driver' => array(
+            'WiContactAPI_driver' => array(
+                'class' => 'Doctrine\\ORM\\Mapping\\Driver\\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(
+                    0 => 'module\WiContactAPI\src\WiContactAPI\V1\Rest\Contact',
+                ),
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'WiContactAPI' => 'WiContactAPI_driver',
+                ),
+            ),
+        ),
+    ),
 );
