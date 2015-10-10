@@ -3,8 +3,13 @@ namespace WiContactAPI\V1\Rest\Contact;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+/* * @todo Check if this library is required
+ * use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
+ */
 
-class ContactResource extends AbstractResourceListener
+class ContactResource extends AbstractResourceListener implements ServiceLocatorAwareInterface
 {
     /**
      * Create a resource
@@ -58,7 +63,9 @@ class ContactResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $collection = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->findAll();
+        return $collection;
     }
 
     /**
@@ -94,5 +101,25 @@ class ContactResource extends AbstractResourceListener
     public function update($id, $data)
     {
         return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+    }
+    
+    /**
+     * Set Service Locator
+     * 
+     * @see \Zend\ServiceManager\ServiceLocatorAwareInterface::setServiceLocator()
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @return void
+     */
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+        $this->serviceLocator = $serviceLocator;
+    }
+    
+    /**
+     * Get Service Locator
+     * 
+     * @return \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     */
+    public function getServiceLocator() {
+        return $this->serviceLocator;
     }
 }
