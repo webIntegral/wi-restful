@@ -1,13 +1,32 @@
 <?php
 namespace WiBase\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use ZF\OAuth2\Doctrine\Entity\UserInterface;
 use Zend\Stdlib\ArraySerializableInterface;
 
+/**
+ * @ORM\Entity
+ */
 class User implements UserInterface, ArraySerializableInterface
 {
 
+    /**
+     *
+     * @var int @ORM\Id
+     *      @ORM\Column(type="integer")
+     *      @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
+    
+    /*
+     * @todo: put roles here like this: https://github.com/API-Skeletons/zf-oauth2-doctrine/issues/9
+     */
+    
+    /*
+     * BEGIN dynamically handled by zf-oauth2-doctrine module
+     */
 
     protected $client;
 
