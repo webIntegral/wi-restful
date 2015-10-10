@@ -1,4 +1,6 @@
 <?php
+namespace WiContactAPI;
+
 return array(
     'service_manager' => array(
         'factories' => array(
@@ -87,7 +89,7 @@ return array(
                 'class' => 'Doctrine\\ORM\\Mapping\\Driver\\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    0 => 'module\WiContactAPI\src\WiContactAPI\V1\Rest\Contact',
+                    __DIR__ . '/../src/' . __NAMESPACE__ . '/V1/Rest/Contact',
                 ),
             ),
             'orm_default' => array(
