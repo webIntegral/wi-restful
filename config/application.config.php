@@ -24,14 +24,14 @@ return array(
         'ZF\\DevelopmentMode',
         'ZF\OAuth2\Doctrine',
         'WiContact',
-        'WiContactAPI',
+        'WiContactAPI','WiBase',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
             './module',
             './vendor',
             './module',
-            './module',
+            './module','./module',
         ),
         'config_glob_paths' => array(
             'config/autoload/{,*.}{global,local}.php',
