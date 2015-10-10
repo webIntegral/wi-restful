@@ -53,6 +53,15 @@ class ContactEntity
     
     // @todo: Add phones support
     // @todo: Add Gedmo Annotations support
-    // @todo: Check if getArrayCopy() function is required
+    
+    /**
+     *
+     * @see Zend\\Stdlib\\Hydrator\\ArraySerializable::extract expects the provided object to implement getArrayCopy()
+     * @return multitype
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
 
 }
