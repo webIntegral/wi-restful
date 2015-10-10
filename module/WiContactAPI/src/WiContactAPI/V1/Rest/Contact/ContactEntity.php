@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="WiContactAPI\V1\Rest\Contact\ContactCollection")
- * @ORM\Table(name="contacts")
+ * @ORM\Table(name="wi_contacts")
  */
 class ContactEntity
 {
