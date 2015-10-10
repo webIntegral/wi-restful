@@ -5,7 +5,8 @@
     "php" : ">=5.3.3",
     "zendframework/zendframework" : "~2.4",
     "doctrine/doctrine-orm-module" : "0.*",
-    "zfcampus/zf-apigility": "~1.0"
+    "zfcampus/zf-apigility": "~1.0",
+    "api-skeletons/zf-oauth2-doctrine": "^1.0"
   },
   "license" : "BSD-3-Clause",
   "keywords" : [ "framework", "zf2" ],
