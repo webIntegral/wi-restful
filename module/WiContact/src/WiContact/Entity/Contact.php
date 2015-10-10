@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="contacts")
+ * @ORM\Table(name="wi_contacts")
  */
 class Contact
 {
