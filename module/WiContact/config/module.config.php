@@ -13,7 +13,7 @@ return array(
                 'type'    => 'segment',
                 'options' => array(
                     // Change this to something specific to your module
-                    'route'    => '/contact[/][:action][/:id]',
+                    'route'    => '/wi-contact[/][:action][/:id]',
                     'constraints' => array(
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'        => '[0-9]+',
