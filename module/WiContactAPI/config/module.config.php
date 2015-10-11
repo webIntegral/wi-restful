@@ -1,6 +1,4 @@
 <?php
-namespace WiContactAPI;
-
 return array(
     'service_manager' => array(
         'factories' => array(
@@ -89,12 +87,32 @@ return array(
                 'class' => 'Doctrine\\ORM\\Mapping\\Driver\\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    __DIR__ . '/../src/' . __NAMESPACE__ . '/V1/Rest/Contact',
+                    0 => 'C:\\vhosts\\restful-wi\\module\\WiContactAPI\\config/../src/WiContactAPI/V1/Rest/Contact',
                 ),
             ),
             'orm_default' => array(
                 'drivers' => array(
                     'WiContactAPI' => 'WiContactAPI_driver',
+                ),
+            ),
+        ),
+    ),
+    'zf-mvc-auth' => array(
+        'authorization' => array(
+            'WiContactAPI\\V1\\Rest\\Contact\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
                 ),
             ),
         ),
