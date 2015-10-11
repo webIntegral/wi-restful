@@ -8,9 +8,6 @@ return array(
     'modules' => array(
         'DoctrineModule',
         'DoctrineORMModule',
-        'ZfcBase',
-        'ZfcUser',
-        'ZfcUserDoctrineORM',
         'Application',
         'ZF\\Apigility',
         'ZF\\Apigility\\Provider',
