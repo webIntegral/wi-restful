@@ -48,7 +48,7 @@ return array(
             'WiBase' => __DIR__ . '/../view'
         )
     ),
-    'doctrine' => array(
+    /*'doctrine' => array(
         'driver' => array(
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
             'WiBase_driver' => array(
@@ -68,5 +68,5 @@ return array(
                 )
             )
         )
-    )
+    )*/
 );
