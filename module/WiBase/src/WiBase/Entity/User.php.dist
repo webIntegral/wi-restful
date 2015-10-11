@@ -1,4 +1,4 @@
-<?php
+<<?php
 namespace WiBase\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -36,14 +36,8 @@ class User implements UserInterface, ArraySerializableInterface
 
     protected $refreshToken;
     // OpenID fields
-    /**
-     * @ORM\Column(type="string")
-     */
     protected $username;
 
-    /**
-     * @ORM\Column(type="string")
-     */
     protected $password;
 
     protected $profile;
