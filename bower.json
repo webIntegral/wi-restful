@@ -1,0 +1,23 @@
+{
+  "name": "restful-wi",
+  "version": "0.0.0",
+  "description": "restful-wi",
+  "main": "index.php",
+  "moduleType": [],
+  "keywords": [
+    "restful-wi"
+  ],
+  "authors": [
+    "mario"
+  ],
+  "license": "MIT",
+  "homepage": "http://restful-wi/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components/",
+    "test",
+    "tests"
+  ]
+}
