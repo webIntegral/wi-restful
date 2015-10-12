@@ -56,7 +56,7 @@ class User implements UserInterface, ArraySerializableInterface
 
     protected $country;
 
-    protected $phone_number;
+    protected $phoneNumber;
 
     public function exchangeArray(array $data)
     {
@@ -320,19 +320,19 @@ class User implements UserInterface, ArraySerializableInterface
 
     /**
      *
-     * @return the $phone_number
+     * @return the $phoneNumber
      */
-    public function getPhone_number()
+    public function getPhoneNumber()
     {
-        return $this->phone_number;
+        return $this->phoneNumber;
     }
 
     /**
      *
-     * @param field_type $phone_number            
+     * @param field_type $phoneNumber            
      */
-    public function setPhone_number($phone_number)
+    public function setPhoneNumber($phoneNumber)
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
     }
 }

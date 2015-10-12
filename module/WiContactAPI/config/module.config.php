@@ -108,7 +108,7 @@ return array(
                     'DELETE' => false,
                 ),
                 'entity' => array(
-                    'GET' => true,
+                    'GET' => false,
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,

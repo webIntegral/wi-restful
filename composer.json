@@ -6,7 +6,7 @@
     "zendframework/zendframework" : "~2.4",
     "doctrine/doctrine-orm-module" : "0.*",
     "zfcampus/zf-apigility": "~1.0",
-    "api-skeletons/zf-oauth2-doctrine": "^1.0"
+    "api-skeletons/zf-oauth2-doctrine": "1.0.1"
   },
   "license" : "BSD-3-Clause",
   "keywords" : [ "framework", "zf2" ],
