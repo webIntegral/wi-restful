@@ -22,6 +22,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.7",
-    "satellizer": "~0.12.5"
+    "satellizer": "~0.12.5",
+    "jquery": "~2.1.4"
   }
 }
