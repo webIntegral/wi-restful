@@ -24,6 +24,8 @@
     "angular": "~1.4.7",
     "satellizer": "~0.12.5",
     "jquery": "~2.1.4",
-    "angular-resource": "~1.4.7"
+    "angular-resource": "~1.4.7",
+    "angular-bootstrap": "~0.14.3",
+    "bootstrap": "~3.3.5"
   }
 }
