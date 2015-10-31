@@ -101,7 +101,7 @@ return array(
         'authorization' => array(
             'WiContactAPI\\V1\\Rest\\Contact\\Controller' => array(
                 'collection' => array(
-                    'GET' => true,
+                    'GET' => false,
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,
