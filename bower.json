@@ -23,6 +23,7 @@
   "dependencies": {
     "angular": "~1.4.7",
     "satellizer": "~0.12.5",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "angular-resource": "~1.4.7"
   }
 }
