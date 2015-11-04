@@ -39,9 +39,9 @@ angular.module('wi.contact.grid', ['ngResource', 'ui.grid', 'ui.grid.autoResize'
 .controller('ContactGridCtrl', ['$scope', '$q', 'uiGridConstants', 'ContactEntity',
 function ($scope, $q, uiGridConstants, ContactEntity) {
 	
-	// @todo: Enable one field filtering with button
-	// @todo: Enable external filtering
 	// @todo: Enable external sorting
+	// @todo: Enable delete button only when data is selected
+	// @todo: Enable collection deleting from datagrid view
 	
 	// Cell template to enable row click event | Cell template para habilitar evento click en cada fila
 	var cellTemplate = '<div ng-click="grid.appScope.rowClick(row)" class="ui-grid-cell-contents">{{COL_FIELD CUSTOM_FILTERS}}</div>';
@@ -56,8 +56,6 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 	// Paging initial setup | Inicializar la paginación
 	var page = 0;
 	var page_size = 12;		// @todo: change to 50.
-	var page_count = null;
-	var total_items = null;
 	
 	// Init search string | Inicializar el search string
 	var search = '';
@@ -117,9 +115,6 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 			
 			// Add new data to grid | Agregar los nuevos datos al datagrid
 			$scope.data = $scope.data.concat(newData);
-			
-			// Save page count | Guardar el número de páginas 
-	        page_count = data.page_count;
 	        
 	        // Tell grid that data is loaded. Disable needLoadMoreData event if last page |
 	        // Decirle al grid que ya se cargaron los datos. Evitar que se carguen más datos si es la última página
@@ -142,7 +137,6 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 	$scope.getData();
 	
 	// Event Listeners | Manejadores de Eventos
-	
 
 	
 	// Row click Event Listernr
@@ -158,24 +152,22 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 	// Delete Event listener
 	$scope.$on('gridBar.delete', function(event, data) {
 		console.log('Delete Event!');
+		var collection = $scope.gridApi.selection.getSelectedRows();
+		// @todo: Send collection to server, so it can delete it
+		debugger;
 	});
 	
 	// Search Event listener
 	$scope.$on('gridBar.search', function(event, data) {
-        console.log('Search Event! String: ' + data);
+        // Reset paging | Resetear la paginación
+        page = 0;
+        // Reset grid data | Resetear los datos del grid
+        $scope.data = [];
+        // Set search string | Setear el search string
+        search = data;
+        // Request data | Solicitar los datos
+        $scope.getData();
     });
-	
-	// Previous page Event
-	$scope.$on('gridBar.prevPage', function(event, data) {
-		console.log('Previous page Event!');
-	});
-	
-	// Next page Event
-	$scope.$on('gridBar.nextPage', function(event, data) {
-		console.log('Next page Event!');
-		getMoreData();
-	});
-	
 	
 }]) // ContactGridCtrl
 
@@ -203,24 +195,18 @@ function ($scope) {
 	
 	// Search Event
 	$scope.searchClk = function() {
-		// Don't search empty strings | No buscar strings vacíos 
-		if ('' != $scope.searchString) {
-			console.log('Search Click');
+		$scope.$emit('gridBar.search', $scope.searchString);
+	};
+	
+	// Search input enter Event
+	$scope.searchKey = function(keyEvent) {
+		// Only search on intro key |
+		// Solo buscar con enter
+		if (keyEvent.which === 13) {
 			$scope.$emit('gridBar.search', $scope.searchString);
 		}
-	};
-	
-	// Previous page Event 
-	$scope.prevPageClk = function() {
-		console.log('Previous Page Click');
-		$scope.$emit('gridBar.prevPage')
-	};
-	
-	// Next page Event
-	$scope.nextPageClk = function() {
-		console.log('Next Page Click');
-		$scope.$emit('gridBar.nextPage');
-	};
+	}
+
 
 }]) // GridSearchBarCtrl
 ;
