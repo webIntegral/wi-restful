@@ -1,3 +1,21 @@
 	<div ng-controller="ContactGridCtrl">
-		<div id="grid1" ui-grid="gridOptions" class="grid" ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection ui-grid-pagination></div>
+	
+		<!-- @todo: Relocate in commons -->
+		<!-- @todo: Relocate controller in commons too -->
+       	<div class="row" ng-controller="GridBarCtrl">
+       		<div class="col-md-6">
+        		<button type="button" class="btn btn-default" ng-click="createClk()"><i class="fa fa-plus"></i> Create</button>
+        		<button type="button" class="btn btn-default" ng-click="deleteClk()"><i class="fa fa-trash"></i> Delete</button>
+       		</div>
+       		<div class="col-md-6">	
+         	<form class="form-inline pull-right">
+         		<div class="form-group">
+         			<input type="text" class="form-control" placeholder="Search" ng-model="searchString">
+         			<button type="button" class="btn btn-default" ng-click="searchClk()"><i class="fa fa-search"></i> Search</button>
+         		</div>
+         	</form>          		
+       		</div>
+       	</div>
+         	
+		<div id="grid1" ui-grid="gridOptions" class="grid" ui-grid-auto-resize ui-grid-selection ui-grid-infinite-scroll></div>
 	</div>

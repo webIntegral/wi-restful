@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="/assets/img/favicon.png">
     
 	<title>Test Contact Datagrid</title>
 	
@@ -17,6 +17,9 @@
 	    
 	    <!-- Bootstrap -->
 	    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+	    
+	    <!-- fontawesome -->
+	    <link rel="stylesheet" href="/components/components-font-awesome/css/font-awesome.min.css">
 	    
 	    <!-- Estilos Template Dashboard -->
 	    <style type="text/css">
@@ -28,7 +31,6 @@
 			body {
 			  padding-top: 50px;
 			}
-			
 			
 			/*
 			 * Global add-ons
@@ -105,6 +107,17 @@
 			.main .page-header {
 			  margin-top: 0;
 			}
+			
+			/*
+			 * Logo Web Integral
+			 */
+			
+			.navbar-brand {
+				padding-top: 10px;	
+			}
+			.wi-logo {
+				height: 30px;
+			}
 		</style>
 	    <!-- /Estilos Template Dashboard -->
 	    
@@ -174,6 +187,7 @@
 
     <div class="container-fluid">
       <div class="row">
+      
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
@@ -193,15 +207,14 @@
             <li><a href="">One more nav</a></li>
             <li><a href="">Another nav item</a></li>
           </ul>
-        </div>
+        </div><!-- /.sidebar -->
+        
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           	<h1 class="page-header">Test wi.contact.grid</h1>
             <div class="row" ng-include="'/src/contact/grid/contactGrid.tpl.html'"></div>
         </div>
-      </div>
-    </div>
-	
-
-
+        
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </body>
 </html>
