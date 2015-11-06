@@ -6,27 +6,33 @@ angular.module('wi.bar.mainGridBar', [])
 .controller('GridBarCtrl', ['$scope',
 function ($scope) {
 	
-	// Search String | String de búsqueda
-	$scope.searchString = '';
+	// *** CREATE | CREAR ***
 	
-	// Create Event
+	// Create button click event | Evento clic en el botón Crear
 	$scope.createClk = function() {
 		console.log('Create Click');
 		$scope.$emit('gridBar.create');
 	};
 	
-	// Delete Event
+	// *** DELETE | BORRAR ***
+	
+	// Delete button click event | Evento clic en el botón Borrar 
 	$scope.deleteClk = function() {
 		console.log('Delete Click');
 		$scope.$emit('gridBar.delete');
 	};
 	
-	// Search Event
+	// *** SEARCH | BUSCAR ***
+	
+	// Search String | String de búsqueda
+	$scope.searchString = '';
+	
+	// Search button click event | Evento clic en el botón Búsqueda
 	$scope.searchClk = function() {
 		$scope.$emit('gridBar.search', $scope.searchString);
 	};
 	
-	// Search input enter Event
+	// Search input Intro key event | Evento tecla en el campo de búsqueda
 	$scope.searchKey = function(keyEvent) {
 		// Only search on intro key |
 		// Solo buscar con enter
