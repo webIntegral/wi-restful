@@ -1,0 +1,14 @@
+       	<div class="row wi-grid-bar" ng-controller="GridBarCtrl">
+       		<div class="col-md-6">
+        		<button type="button" class="btn btn-default" ng-click="createClk()"><i class="fa fa-plus"></i> Create</button>
+        		<button type="button" class="btn btn-default" ng-click="deleteClk()"><i class="fa fa-trash"></i> Delete</button>
+       		</div>
+       		<div class="col-md-6">	
+         	<form class="form-inline pull-right">
+         		<div class="form-group">
+         			<input type="text" class="form-control" placeholder="Search" ng-model="searchString" ng-keypress="searchKey($event)">
+         			<button type="button" class="btn btn-default" ng-click="searchClk()"><i class="fa fa-search"></i> Search</button>
+         		</div>
+         	</form>          		
+       		</div>
+       	</div>
