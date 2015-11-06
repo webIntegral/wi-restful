@@ -42,6 +42,7 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 	// @todo: Enable external sorting
 	// @todo: Enable delete button only when data is selected
 	// @todo: Enable collection deleting from datagrid view
+	// @todo: Make unsuscribe when distroy. Check http://stackoverflow.com/questions/11252780/whats-the-correct-way-to-communicate-between-controllers-in-angularjs
 	
 	// Cell template to enable row click event | Cell template para habilitar evento click en cada fila
 	var cellTemplate = '<div ng-click="grid.appScope.rowClick(row)" class="ui-grid-cell-contents">{{COL_FIELD CUSTOM_FILTERS}}</div>';
@@ -53,17 +54,19 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
    		// @todo: Add other columns here
     ];
 	
-	// Paging initial setup | Inicializar la paginación
-	var page = 0;
-	var page_size = 12;		// @todo: change to 50.
+	// Page number | Número de Página
+	$scope.page = 0;
 	
-	// Init search string | Inicializar el search string
-	var search = '';
+	// rows per page | filas por página
+	$scope.page_size = 12;		// @todo: change to 50.
 	
-	// Init sorts | Inicializar la ordenación
-	var sorts = [];
+	// Search string | String de búsqueda
+	$scope.search = '';
 	
-	// Init datagri data variable | Inicializar la variable que contiene los datos del datagrid
+	// Sorts | Ordenación  
+	$scope.sorts = {};
+	
+	// Grid data variable | Variable que contiene los datos del datagrid
 	$scope.data = [];
 	
 	/*
@@ -86,7 +89,10 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 	    // Grid Api events
 	    onRegisterApi: function(gridApi) {
 	    	$scope.gridApi = gridApi;
+	    	// Infinite Scroll more data event
 	        $scope.gridApi.infiniteScroll.on.needLoadMoreData($scope, $scope.getData);
+	        // sortChanged
+	        $scope.gridApi.core.on.sortChanged( $scope, $scope.sortChanged );
         }
 	};
 	
@@ -97,15 +103,15 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 		var promise = $q.defer();
 		
 		// Increment page number | Incrementar el número de la página
-		page = page+1;
+		$scope.page = $scope.page+1;
 		
 		// Request page | Solicitar la página
 		ContactEntity.query(
 			{
-				page: page,
-				page_size: page_size,
-				search: search,
-				sorts: sorts
+				page: $scope.page,
+				page_size: $scope.page_size,
+				search: $scope.search,
+				sorts: $scope.sorts
 			}
 		// On success | Si se reciben datos con éxito
 		).$promise.then(function (data) {
@@ -132,6 +138,33 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 		
 	}; // getData()
 	
+	// Sort Change event handler | Manejador del evento sortChange (cambio en la ordenación
+	$scope.sortChanged = function ( grid, sortColumns ) {
+			
+		// Reset sort variable | Resetear la variable de la ordenación
+		$scope.sorts = {};
+		
+		// Check if there are sorts to do | Checkear si sí hay campos para ordenar
+		if (sortColumns.length > 0) {
+			// Add each field sorted to sorts | Agregar cada campo ordenado a sorts
+			for (i=0; i < sortColumns.length; i++) {
+				$scope.sorts[sortColumns[i].field] = sortColumns[i].sort.direction;
+			}			
+		}
+		
+		// Reset Grid | Resetear el Grid
+		$scope.resetGrid();
+		// Request data | Solicitar los datos
+		$scope.getData();
+	};
+	
+	// Erase Grid data and set paging to 0 | Borrar los datos y setear la página a 0
+	$scope.resetGrid = function () {
+        // Reset paging | Resetear la paginación
+        $scope.page = 0;
+        // Reset grid data | Resetear los datos del grid
+        $scope.data = [];		
+	};
 	
 	// Request first data stream | Solicitar primera tanda de datos
 	$scope.getData();
@@ -159,12 +192,10 @@ function ($scope, $q, uiGridConstants, ContactEntity) {
 	
 	// Search Event listener
 	$scope.$on('gridBar.search', function(event, data) {
-        // Reset paging | Resetear la paginación
-        page = 0;
-        // Reset grid data | Resetear los datos del grid
-        $scope.data = [];
         // Set search string | Setear el search string
-        search = data;
+        $scope.search = data;
+		// Reset Grid | Resetear el Grid
+		$scope.resetGrid();
         // Request data | Solicitar los datos
         $scope.getData();
     });

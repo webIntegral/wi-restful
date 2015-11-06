@@ -64,8 +64,9 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
     public function fetchAll($params = array())
     {
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        $collection = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->findAll();
+        $collection = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->pageBy($params);
         return $collection;
+        
     }
 
     /**

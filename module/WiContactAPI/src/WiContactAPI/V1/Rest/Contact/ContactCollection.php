@@ -19,7 +19,7 @@ class ContactCollection extends EntityRepository
     public function pageBy($params = array())
     {
         
-        // Table alias | Alias para las tablas
+        // Table name | Nombres de las tablas
         $tbl1 = 'wi_contact';
         
         // Define fields that allow filtering and ordering | 
@@ -34,41 +34,86 @@ class ContactCollection extends EntityRepository
             ->select("$tbl1");
         
         // Add filters | Agregar filtros
-        $i = 0;
         
         // If filters are setted | Si los filtros están definidos
-        if (property_exists($params, 'filters')) {
+        if (property_exists($params, 'search')) {
             
-            // Decode filters string | decodificar el string con los filtros
-            $filters = json_decode($params->filters);
-            
-            // Create each filter in Query | Crear cada filtro en la consulta
-            foreach ($filters as $filter => $string) {
+            // If filter is not empty | Si el filtro no está vacío
+            if ('' != $params->search) {
                 
-                // Check if field allows filtering | Checkear si el campo permite filtrar
-                if (array_key_exists($filter, $fields)) {
+                // Clean filter string | Limpiar el string del filtro
+                $filter = '%' . preg_replace("/[^a-zA-Z0-9áéíóúüÁÉÍÓÚÜ',.@&_-]+/", "", $params->search) . '%';
+                
+                // Init count to deal with Doctirne setParameter() function |
+                // Inicializar el contador para utilizar la función setParameter() de Doctrine
+                $i = 1;
+                
+                // For each field
+                foreach ($fields as $field => $column) {
+                    
+                    // Add filters | Agregar los filtros
+                    // Other rounds add orWhere | Las otras vueltas agregar orWhere
+                    if ($i > 1) {
+                        $qb->orWhere(
+                            $qb->expr()->like($column, "?$i")
+                        );
+                        $qb->setParameter($i, $filter);
+                        
+                    // First round add where | Primera vuelta agregar where
+                    } else {
+                        $qb->where(
+                            $qb->expr()->like($column, "?$i")
+                        );
+                        $qb->setParameter($i, $filter);
+                    }
                     
                     // Count | Contador
-                    $i = $i + 1; 
+                    $i = $i + 1;
                     
-                    // Get the field | Cargar el campo a filtrar
-                    $field = $fields[$filter];
+                } // foreach
+                
+            } // if
+
+        } // if
+        
+        // Add Sorts | Agregar ordenación
+        
+        // If sorts are setted | Si hay ordenación
+        if (property_exists($params, 'sorts')) {
+            
+            // Get sorts parameter | Obtener el parámetro sorts
+            $sorts =json_decode($params->sorts);
+            
+            // for each sorted field | para cada campo ordenado
+            $i = 0;
+            foreach ($sorts as $sort => $dir) {
+                
+                // If field is sortable | Si el campo permite ordenación
+                if (array_key_exists($sort, $fields)) {
                     
-                    // Clean filter string | Limpiar el texto del filtro 
-                    // @todo: Ver porqué el underscore no funciona en la búsqueda
-                    $string = '%' . preg_replace("/[^a-zA-Z0-9áéíóúüÁÉÍÓÚÜ',.@&_-]+/", "", $string) . '%';
-                    
-                    // Add Where/like clause with filter | Agregar clausula Where/like con el filtro
-                    $qb->andWhere(
-                        $qb->expr()->like($field, "?$i")
-                    );
-                    $qb->setParameter($i, $string);
+                    // If sort direction is valid
+                    if (strtoupper($dir) === 'ASC' || strtoupper($dir) === 'DESC') {
+                        
+                        // Count | Contador
+                        $i = $i + 1;
+                        
+                        // Get field | Obtener el campo
+                        $field = $fields[$sort];
+                        
+                        // Add order clause | Agregar clausula de ordenación
+                        $qb->addOrderBy($field, $dir);
+                        
+                    } // if
                     
                 } // if
-            } // foreach         
+                
+            } // foreach
+            
         } // if
         
         
+        // Return new ZendPaginator | Devolver un nuevo paginador
+        return new ZendPaginator(new PaginatorAdapter(new ORMPaginator($qb)));
         
     } // function pageBy
     
