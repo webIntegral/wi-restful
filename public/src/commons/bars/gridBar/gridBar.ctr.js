@@ -1,17 +1,17 @@
-angular.module('wi.bar.mainGridBar', [])
+
 
 /**
  * Grid Bar Ctrlr | Controlador de la Barra del Grid
  */
-.controller('GridBarCtrl', ['$scope',
-function ($scope) {
+.controller('GridBarCtrl', ['$scope', 
+function ($scope) {	
 	
 	// *** CREATE | CREAR ***
 	
 	// Create button click event | Evento clic en el botón Crear
 	$scope.createClk = function() {
 		console.log('Create Click');
-		$scope.$emit('gridBar.create');
+		$scope.$emit('mainGridBar.create');
 	};
 	
 	// *** DELETE | BORRAR ***
