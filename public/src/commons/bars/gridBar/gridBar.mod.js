@@ -2,7 +2,7 @@
     'use strict';
     
     angular
-    	.module('wi.bar.mainGridBar', [
+    	.module('wi.bar.gridBar', [
     	                               
         ]);
 
