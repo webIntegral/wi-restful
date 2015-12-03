@@ -77,6 +77,12 @@
 	        		console.log('Click on search with string: '+ searchString);
 	        	}
 	        	
+	        	vm.show = false;
+	        	
+	        	vm.toggleShow = function() {
+	        		vm.show = !vm.show;
+	        	}
+	        	
 	        }
 		</script>
 	<!-- /Test Script -->
@@ -121,10 +127,12 @@
       	<div class="row">
       	
       		<div ng-controller="TestCtr as vm">
+      		
+      			<button ng-click="vm.toggleShow()">Toggle Show Select</button>
       			
       			<div wi-grid-bar
       			 	
-      				show-select="true"
+      				show-select="vm.show"
       				show-create="true"
       				show-delete="true"
       				
