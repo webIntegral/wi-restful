@@ -1,0 +1,15 @@
+<div class="row wi-grid-bar">
+	<div class="col-xs-6">
+		<button type="button" class="btn btn-default" ng-show="showSelect" ng-disabled="disableSelect" ng-click="onSelect()"><i class="fa fa-check"></i> <span class="hidden-sm hidden-xs">Select</span></button>
+		<button type="button" class="btn btn-default" ng-show="showCreate" ng-disabled="disableCreate" ng-click="onCreate()"><i class="fa fa-plus"></i> <span class="hidden-sm hidden-xs">Create</span></button>
+		<button type="button" class="btn btn-default" ng-show="showDelete" ng-disabled="disableDelete" ng-click="onDelete()"><i class="fa fa-trash"></i> <span class="hidden-sm hidden-xs">Delete</span></button>
+	</div>
+	<div class="col-xs-6">	
+	 	<form class="form-inline">
+	 		<div class="form-group">
+	 			<input type="text" class="form-control" placeholder="Search" ng-model="searchString" ng-keypress="searchKey($event)">
+	 			<button type="button" class="btn btn-default" ng-click="search()"><i class="fa fa-search"></i> <span class="hidden-sm hidden-xs">Search</span></button>
+	 		</div>
+	 	</form>
+	</div>
+</div>
