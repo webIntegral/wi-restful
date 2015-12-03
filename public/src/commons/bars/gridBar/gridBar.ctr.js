@@ -1,53 +1,132 @@
 /**
  * 
+ * Grid Bar Controller
+ * 
+ * Handle the events triggered by bar's buttons and inputs, and emits appopiated events.
+ * This events bubble up to parent controller, who trigger appopiated datagrid actions
+ * 
+ * Maneja los eventos generados por los botones y los inputs y emite los eventos apropiados.
+ * Los eventos "suben" hasta el controlador padre, quién hace las solicitudes apropiadas para el datagrid.
+ * 
  */
-(function() {
+(function () {
 	
 	angular
 		.module('wi.bar.gridBar')
-		.controller('GridBarCtr', GridBarCtr);
+		.service('GridBarSrv', GridBarSrv)
+		.controller('GridBarCtr', GridBarCtr)
+		.directive('wiGridBar', wiGridBar);
 	
-	GridBarCtr.$inject = ['$scope'];
+	function wiGridBar () {
+		return {
+			scope: {
+				showSelect: '@',
+				showCreate: '=',
+				showDelete: '=',
+				disableSelect: '=',
+				disableCreate: '=',
+				disableDelete: '=',
+				searchString: '=',
+				select:'&',
+				create:'&',
+				del:'&'
+			},
+			transclude: true,
+			templateUrl: 'gridBar.tpl.html',
+			controller: GridBarCtr,
+	        controllerAs: 'vm',
+	        bindToController: true
+				
+		}
+		
+	}
 	
-	function GridBarCtr($scope) {
+	function GridBarSrv () {
+		this.disableSelect = false;
+		this.disableDelete = false;
+		this.disableCreate = false;
+		this.searchString = '';
+		
+		this.getDisableDelete = function () {
+			//debugger;
+			return this.disableDelete;
+		}
+	}
+	
+	GridBarCtr.$inject = ['$scope', 'GridBarSrv'];
+	
+	function GridBarCtr ($scope, GridBarSrv) {
 		/* jshint validthis: true */
 		var vm = this;
 		
-		activate();
+		//debugger;
+		
+		// Bindables
+		vm.selectClk = selectClk;
+		vm.createClk = createClk;
+		vm.deleteClk = deleteClk;
+		vm.searchClk = searchClk;
+		vm.searchKey = searchKey;
+		
+		activate ();
+		
+		/* Directive Testing */
+		
+		// console.log($scope.showSelect);
+		
+		/*/Directive Testing */
 		
 		// Activate controller | Enable controller
-		function activate() {
+		function activate () {
 			
 		}
 		
-		// Events
+		// *** Event listeners ***
 		
-		// Create button click event | Evento clic en el botón Crear
-		$scope.createClk = function() {
-			console.log('Create Click');
-			$scope.$emit('mainGridBar.create');
+		// Disables/Enables delete button on 'gridBar.disableDelete' Event
+		$scope.$on('gridBar.disableDelete', function (event, data) {
+			// Update service variable
+			// GridBarSrv.disableDelete = data;
+			// Update controller variable
+			vm.disableDelete = data;
+		});
+		
+		// *** Events | Eventos ***
+		
+		// Create click event
+		function selectClk () {
+			console.log('Select Click');
+			$scope.$emit('gridBar.select');
+			$scope.apply(function() {
+				$scope.select();
+			});
 		};
 		
-		// Delete button click event | Evento clic en el botón Borrar 
-		$scope.deleteClk = function() {
+		// Create click event
+		function createClk () {
+			console.log('Create Click');
+			$scope.$emit('gridBar.create');
+		};
+		
+		// Delete click event 
+		function deleteClk () {
 			console.log('Delete Click');
 			$scope.$emit('gridBar.delete');
 		};
 		
-		// Search String | String de búsqueda
-		$scope.searchString = '';
-		
 		// Search button click event | Evento clic en el botón Búsqueda
-		$scope.searchClk = function() {
-			$scope.$emit('gridBar.search', $scope.searchString);
+		function searchClk () {
+			console.log('Search Click: '+ vm.searchString);
+			$scope.$emit('gridBar.search', vm.searchString);
 		};
 		
 		// Search input Intro key event | Evento tecla en el campo de búsqueda
-		$scope.searchKey = function(keyEvent) {
+		function searchKey (keyEvent) {
 			// Only search on intro key |
 			// Solo buscar con enter
 			if (keyEvent.which === 13) {
-				$scope.$emit('gridBar.search', $scope.searchString);
+				console.log('Search Input Intro: '+ vm.searchString);
+				$scope.$emit('gridBar.search', vm.searchString);
 			}
 		}
 	}

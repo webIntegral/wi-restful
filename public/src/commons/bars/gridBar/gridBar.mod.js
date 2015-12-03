@@ -3,7 +3,7 @@
     
     angular
     	.module('wi.bar.gridBar', [
-    	                               
+           
         ]);
 
 })();

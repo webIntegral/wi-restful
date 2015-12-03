@@ -1,14 +1,15 @@
-       	<div class="row wi-grid-bar" ng-controller="GridBarCtrl">
-       		<div class="col-md-6">
-        		<button type="button" class="btn btn-default" ng-click="createClk()"><i class="fa fa-plus"></i> Create</button>
-        		<button type="button" class="btn btn-default" ng-click="deleteClk()"><i class="fa fa-trash"></i> Delete</button>
+       	<div class="row wi-grid-bar" ng-controller="GridBarCtr as vm">
+       		<div class="col-xs-6">
+       			<button type="button" class="btn btn-default" ng-show="vm.showSelect" ng-disabled="vm.disableSelect" ng-click="vm.selectClk()"><i class="fa fa-check"></i> <span class="hidden-sm hidden-xs">Select</span></button>
+        		<button type="button" class="btn btn-default" ng-show="vm.showCreate" ng-disabled="vm.disableCreate" ng-click="vm.createClk()"><i class="fa fa-plus"></i> <span class="hidden-sm hidden-xs">Create</span></button>
+        		<button type="button" class="btn btn-default" ng-show="vm.showDelete" ng-disabled="vm.disableDelete" ng-click="vm.deleteClk()"><i class="fa fa-trash"></i> <span class="hidden-sm hidden-xs">Delete</span></button>
        		</div>
-       		<div class="col-md-6">	
-         	<form class="form-inline pull-right">
+       		<div class="col-xs-6">	
+         	<form class="form-inline">
          		<div class="form-group">
-         			<input type="text" class="form-control" placeholder="Search" ng-model="searchString" ng-keypress="searchKey($event)">
-         			<button type="button" class="btn btn-default" ng-click="searchClk()"><i class="fa fa-search"></i> Search</button>
+         			<input type="text" class="form-control" placeholder="Search" ng-model="vm.searchString" ng-keypress="vm.searchKey($event)">
+         			<button type="button" class="btn btn-default" ng-click="vm.searchClk()"><i class="fa fa-search"></i> <span class="hidden-sm hidden-xs">Search</span></button>
          		</div>
-         	</form>          		
+         	</form>
        		</div>
        	</div>
