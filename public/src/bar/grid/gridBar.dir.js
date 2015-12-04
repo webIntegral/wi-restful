@@ -2,7 +2,7 @@
 	'use strict';
 	
 	/**
-	 * WiGridBar Directive
+	 * wiGridBar Directive
 	 * 
 	 * This directive is a common datagrid bar with select, create, delete and search capabilities.
 	 * 
