@@ -5,6 +5,7 @@ use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 /* * @todo Check if this library is required
  * use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
  */
@@ -19,7 +20,23 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        // Get entity manager and Doctrine Hydrator 
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $hydrator = new DoctrineHydrator($em);
+        
+        // Decode json data
+        $dataArray = json_decode(json_encode($data), true);
+        
+        // Create new entity and hydrate data
+        $entity = new ContactEntity();
+        $entity = $hydrator->hydrate($dataArray, $entity);
+        
+        // Execute
+        $em->persist($entity);
+        $em->flush();
+        
+        // Return new created entity
+        return $entity;
     }
 
     /**
@@ -52,7 +69,9 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $entity = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->find($id);
+        return $entity;
     }
 
     /**
@@ -101,7 +120,23 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        // Get entity manager and Doctrine Hydrator 
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $hydrator = new DoctrineHydrator($em);
+        
+        // Decode json data
+        $dataArray = json_decode(json_encode($data), true);
+        
+        // Get entity by id and hydrate data
+        $entity = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->find($id);
+        $entity = $hydrator->hydrate($dataArray, $entity);
+        
+        // Execute
+        $em->persist($entity);
+        $em->flush();
+        
+        // Return new created entity
+        return $entity;
     }
     
     /**
