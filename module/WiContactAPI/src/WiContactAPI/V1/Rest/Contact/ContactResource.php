@@ -6,9 +6,6 @@ use ZF\Rest\AbstractResourceListener;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-/* * @todo Check if this library is required
- * use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
- */
 
 class ContactResource extends AbstractResourceListener implements ServiceLocatorAwareInterface
 {
