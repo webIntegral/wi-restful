@@ -9,6 +9,10 @@ use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
 class ContactResource extends AbstractResourceListener implements ServiceLocatorAwareInterface
 {
+    
+    // @todo: Disable/Enable soft-deleteable filter conditionally, soy big Admins can view
+    // deleted entities and reenable them.
+    
     /**
      * Create a resource
      *
@@ -44,7 +48,18 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        // Get entity manager
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+        // Get the entity
+        $entity = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->find($id);
+        
+        // Remove the entity
+        $em->remove($entity);
+        $em->flush();
+        
+        // Return true for success
+        return true;
     }
 
     /**
@@ -66,8 +81,16 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
      */
     public function fetch($id)
     {
+        // Get entity manager
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+        // Enable Softdeleteable filter
+        $em->getFilters()->enable('soft-deleteable');
+        
+        // Get the entity
         $entity = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->find($id);
+        
+        // Return it
         return $entity;
     }
 
@@ -79,10 +102,16 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
      */
     public function fetchAll($params = array())
     {
+        // Get entity manager
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        $collection = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->pageBy($params);
-        return $collection;
         
+        // Enable Softdeleteable filter
+        $em->getFilters()->enable('soft-deleteable');
+        
+        // Get paged collection
+        $collection = $em->getRepository('WiContactAPI\V1\Rest\Contact\ContactEntity')->pageBy($params);
+        
+        return $collection;
     }
 
     /**
@@ -120,6 +149,9 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
         // Get entity manager and Doctrine Hydrator 
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         $hydrator = new DoctrineHydrator($em);
+        
+        // Enable Softdeleteable filter
+        $em->getFilters()->enable('soft-deleteable');
         
         // Decode json data
         $dataArray = json_decode(json_encode($data), true);
