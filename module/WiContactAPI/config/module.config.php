@@ -85,6 +85,22 @@ return array(
         ),
     ),
     'doctrine' => array(
+        'configuration' => array(
+            'orm_default' => array(
+                'filters' => array(
+                    // Filter for softdeleteable doctrine extension
+                    'soft-deleteable' => 'Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter'
+                ),
+            ),
+        ),
+        'eventmanager' => array(
+            'orm_default' => array(
+                'subscribers' => array(
+                    'Gedmo\Timestampable\TimestampableListener',
+                    'Gedmo\SoftDeleteable\SoftDeleteableListener'
+                ),
+            ),
+        ),
         'driver' => array(
             'WiContactAPI_driver' => array(
                 'class' => 'Doctrine\\ORM\\Mapping\\Driver\\AnnotationDriver',
@@ -117,6 +133,23 @@ return array(
                     'PATCH' => false,
                     'DELETE' => false,
                 ),
+            ),
+        ),
+    ),
+    'zf-content-validation' => array(
+        'WiContactAPI\\V1\\Rest\\Contact\\Controller' => array(
+            'input_filter' => 'WiContactAPI\\V1\\Rest\\Contact\\Validator',
+        ),
+    ),
+    'input_filter_specs' => array(
+        'WiContactAPI\\V1\\Rest\\Contact\\Validator' => array(
+            0 => array(
+                'required' => false,
+                'validators' => array(),
+                'filters' => array(),
+                'name' => 'name',
+                'description' => 'Contact name',
+                'continue_if_empty' => false,
             ),
         ),
     ),
