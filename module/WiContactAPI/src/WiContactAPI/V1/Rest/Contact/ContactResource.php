@@ -11,7 +11,7 @@ class ContactResource extends AbstractResourceListener implements ServiceLocator
 {
     
     // @todo: Disable/Enable soft-deleteable filter conditionally, soy big Admins can view
-    // deleted entities and reenable them.
+    // deleted entities and reenable them. Enable should be global, disable locally!
     
     /**
      * Create a resource
