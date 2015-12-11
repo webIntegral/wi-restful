@@ -15,19 +15,19 @@
 	 */
 	
 	angular
-		.module('wi.nav.main')
-		.directive('wiMainNav', wiMainNav);
+		.module('wi.nav')
+		.directive('wiNav', wiNav);
 	
 	/**
 	 * Directive definition
 	 */
-	function wiMainNav() {
+	function wiNav() {
 		return {
 			scope:{
 				
 			},
 			replace: true,
-			templateUrl:'/src/nav/main/mainNav.tpl.html',
+			templateUrl:'layout/nav/nav.tpl.html',
 			link: function(scope) {
 				
 			} //link

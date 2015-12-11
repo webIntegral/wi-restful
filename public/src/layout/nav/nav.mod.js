@@ -5,8 +5,8 @@
 	'use strict';
 	
 	angular
-		.module('wi.nav.main', [
+		.module('wi.nav', [
 		    'ui.bootstrap',
-		    'ui.router'
+		    'wi.blocks.router'
         ]);
 })();

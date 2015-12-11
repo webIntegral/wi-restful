@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<base href="/src/">
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/assets/img/favicon.png">
     
-    <title>wi.nav.main</title>
+    <title>wi.nav test</title>
     
 	<!-- styles -->
 	    <!-- Bootstrap -->
@@ -20,28 +21,34 @@
     <!-- /styles -->
     
     <!-- app styles -->
-    	<!-- Estilos Template Dashboard -->
-		<link rel="stylesheet" href="/src/layout/dashboard.css">
-
-    	<!-- Estilos Template Dashboard -->
-		<link rel="stylesheet" href="/src/nav/main/mainNav.css">
+    	<!-- layout -->
+		<link rel="stylesheet" href="/src/assets/css/layout.css">
+		<!-- nav -->
+		<link rel="stylesheet" href="/src/layout/nav/nav.css">
     <!-- /app styles -->
     
 	<!-- scripts -->
 		<!-- jquery -->
 		<script src="/components/jquery/dist/jquery.min.js"></script>
-		<!-- Lib Angular -->
+		<!-- Angular -->
 		<script src="/components/angular/angular.min.js"></script>
-		<!-- Lib ngResource -->
+		<!-- ngResource -->
 		<script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<!-- /scripts -->
 	
-	<!-- app -->
-		<!-- main nav module -->
-		<script src="/src/nav/main/mainNav.mod.js"></script>
-		<!-- main nav directive -->
-		<script src="/src/nav/main/mainNav.dir.js"></script>
-	<!-- app -->
+	<!-- router -->
+		<!-- uiRouter -->
+		<script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<!-- wi.blocks.router -->
+    	<script src="/src/blocks/router/router.mod.js"></script>
+    	<script src="/src/blocks/router/router.prv.js"></script>
+	<!-- /router -->
+	
+	<!-- nav -->
+		<!-- wi.nav -->
+		<script src="/src/layout/nav/nav.mod.js"></script>
+		<script src="/src/layout/nav/nav.dir.js"></script>
+	<!-- nav -->
 	
 	<!-- Test Script -->
 		<script>
@@ -52,7 +59,8 @@
 			angular
 				.module('test.module', [
 	                // Inject module to test
-				 	'wi.nav.main'
+	                'wi.blocks.router',
+				 	'wi.nav'
 	            ]);
 	            
 	        angular
@@ -106,7 +114,9 @@
 </head>
 <body ng-app="test.module">
 
-	<div wi-main-nav></div>
+	<div wi-nav></div>
+	
+	<p><strong>Important</strong> Keep in mind that the routes from the nav links won't work, since this test is not loadig all required modules. This is done in app wire by a parent module.</p>
 
 </body>
 </html>
