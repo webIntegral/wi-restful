@@ -6,6 +6,7 @@
 	
 	angular
 		.module('wi.nav.main', [
-		    'ui.bootstrap'              
+		    'ui.bootstrap',
+		    'ui.router'
         ]);
 })();

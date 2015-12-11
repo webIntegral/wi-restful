@@ -27,7 +27,7 @@
 				
 			},
 			replace: true,
-			templateUrl:'mainNav.tpl.html',
+			templateUrl:'/src/nav/main/mainNav.tpl.html',
 			link: function(scope) {
 				
 			} //link
