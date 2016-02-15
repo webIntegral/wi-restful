@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<base href="/src/">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/assets/img/favicon.png">
+    
+    <title>wi.blocks.router</title>
+    
+	<!-- styles -->
+	    <!-- Bootstrap -->
+	    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+	    <!-- fontawesome -->
+	    <link rel="stylesheet" href="/components/components-font-awesome/css/font-awesome.min.css">
+    	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    	<link rel="stylesheet" href="/src/assets/css/ie10-viewport-bug-workaround.css">
+    <!-- /styles -->
+    
+	<!-- scripts -->
+		<!-- jquery -->
+		<script src="/components/jquery/dist/jquery.min.js"></script>
+		<!-- Angular -->
+		<script src="/components/angular/angular.min.js"></script>
+		<!-- ngResource -->
+		<script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+	<!-- /scripts -->
+    
+	<!-- router -->
+		<!-- uiRouter -->
+		<script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<!-- wi.blocks.router -->
+    	<script src="/src/blocks/router/router.mod.js"></script>
+    	<script src="/src/blocks/router/router.prv.js"></script>
+	<!-- /router -->
+	
+	<!-- Test Script -->
+		<script>
+			/*
+			 * Test Script.
+			 * 
+			 * Create two dummy states to test navigation (routing)
+			 * 
+			 * http://restful.wi/src/blocks/router/test.html
+			 */
+			angular
+				.module('test.module', [
+	                // Inject modules to test
+	                'wi.blocks.router'
+	            ]);
+	            
+	        angular
+	        	.module('test.module')
+	        	.run(moduleRun)
+	        	.controller('RouteOneCtr', RouteOneCtr)
+	        	.controller('RouteTwoCtr', RouteTwoCtr);
+	        
+	        // Dummy controller for route one
+	        RouteOneCtr.$inject = ['$scope'];
+	        function RouteOneCtr($scope) {
+	        	
+	        }
+	        
+	        // Dummy controller for route two
+	        RouteTwoCtr.$inject = ['$scope'];
+	        function RouteTwoCtr($scope) {
+	        	
+	        }
+	        
+	        // Run function to load states (routes)
+	        /* @ngInject */
+	        function moduleRun(routerHelper) {
+	        	routerHelper.configureStates(getStates());
+	        }
+	        
+	        // Function to get States on app run
+	        function getStates() {
+	        	return [
+        	        // Dummy route one
+        	        {
+        		        state: 'routeone',
+        		        config: {
+        		        	url: '/routeone',
+        		        	template: '<p>Route One</p>',
+        		        	controller: 'RouteOneCtr',
+        		        	controllerAs: 'vm'
+        		        }
+        	        },
+        	        // Dummy route two
+        	        {
+        		        state: 'routetwo',
+        		        config: {
+        		        	url: '/routetwo',
+        		        	template: '<p>Route Two</p>',
+        		        	controller: 'RouteTwoCtr',
+        		        	controllerAs: 'vm'
+        		        }
+        	        }
+       	        ];
+	        	
+	        } // TestCtr
+		</script>
+	<!-- /Test Script -->
+    
+</head>
+<body ng-app="test.module">
+	<ul>
+	    <li><a ui-sref="routeone">Route One</a></li>
+	    <li><a ui-sref="routetwo">Route Two</a></li>
+	</ul>
+	<div ui-view></div>
+</body>
