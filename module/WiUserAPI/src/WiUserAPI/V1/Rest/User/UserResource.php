@@ -3,8 +3,11 @@ namespace WiUserAPI\V1\Rest\User;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
 
-class UserResource extends AbstractResourceListener
+class UserResource extends AbstractResourceListener implements ServiceLocatorAwareInterface
 {
     /**
      * Create a resource
@@ -58,7 +61,13 @@ class UserResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        // Get entity manager
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+        // Get paged collection
+        $collection = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->findAll($params);
+        
+        return $collection;
     }
 
     /**
@@ -94,5 +103,25 @@ class UserResource extends AbstractResourceListener
     public function update($id, $data)
     {
         return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+    }
+    
+    /**
+     * Set Service Locator
+     *
+     * @see \Zend\ServiceManager\ServiceLocatorAwareInterface::setServiceLocator()
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @return void
+     */
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
+        $this->serviceLocator = $serviceLocator;
+    }
+    
+    /**
+     * Get Service Locator
+     *
+     * @return \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     */
+    public function getServiceLocator() {
+        return $this->serviceLocator;
     }
 }

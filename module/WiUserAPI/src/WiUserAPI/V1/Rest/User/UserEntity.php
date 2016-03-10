@@ -6,12 +6,11 @@ use Zend\Stdlib\ArraySerializableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WiUserAPI\V1\Rest\User\UserCollection")
  * @ORM\Table(name="user")
  */
 class UserEntity implements UserInterface, ArraySerializableInterface
 {
-    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -93,7 +92,6 @@ class UserEntity implements UserInterface, ArraySerializableInterface
         return array(
             'id' => $this->getId(),
             'username' => $this->getUsername(),
-            'password' => $this->getPassword(),
             'profile' => $this->getProfile(),
             'email' => $this->getEmail(),
             'country' => $this->getCountry(),
@@ -139,13 +137,16 @@ class UserEntity implements UserInterface, ArraySerializableInterface
     }
 
     /**
-     *
+     * Disable getPassword method to prevent
+     * anyone to get the password
      * @return the $password
      */
+    /*
     public function getPassword()
     {
         return $this->password;
     }
+    */
 
     /**
      *
