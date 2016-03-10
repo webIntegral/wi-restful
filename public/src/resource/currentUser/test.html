@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/assets/img/favicon.png">
     
-    <title>resource.currentUser.test</title>
+    <title>wi.resource.currentUser.test</title>
     
 	<!-- styles -->
 	    <!-- Bootstrap -->
@@ -52,7 +52,7 @@
 		<!-- currentUser -->
 		<script src="/src/resource/currentUser/currentUser.mod.js"></script>
 		<script src="/src/resource/currentUser/currentUser.res.js"></script>
-	<!-- app -->
+	<!-- resource -->
 	
 	<!-- Test Script -->
 		<script>
@@ -85,7 +85,7 @@
 	        		vm.getCurrentUser();
 	        	} // activate
 	        	
-	        	// getCurrentUser
+	        	
 	        	function getCurrentUser() {
 	        		
 	        		CurrentUsertResource.get(
@@ -93,6 +93,7 @@
        				// On success
 	        		).$promise.then(function(data) {
 	        			vm.currentUser = data;
+	        			
         			// On error
 	        		}, function(error) {
 	        			
@@ -107,7 +108,7 @@
 						}
 	        			
 	        		});
-	        	}
+	        	}// getCurrentUser
 	        }
 		</script>
 	<!-- /Test Script -->

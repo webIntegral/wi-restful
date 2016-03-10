@@ -11,9 +11,9 @@
 		.module('wi.resource.currentUser')
 		.factory('CurrentUserResource', CurrentUserResource);
 	
-	CurrentUserResource.$inject = ['$resource', '$auth'];
+	CurrentUserResource.$inject = ['$resource'];
 		
-	function CurrentUserResource($resource, $auth) {
+	function CurrentUserResource($resource) {
 		return $resource('/user-by-token', {
 			
 		}, {
