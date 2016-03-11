@@ -1,3 +1,11 @@
+/**
+ * wi.blocks.error
+ * 
+ * Http Error Interceptor Provider
+ * 
+ * Provider that handles Http error response
+ * 
+ */
 (function() {
 	'use strict';
 	
@@ -11,9 +19,9 @@
 		/* jshint validthis:true */
 		this.$get = HttpErrorInterceptor;
 		
-		HttpErrorInterceptor.$inject = [];
+		HttpErrorInterceptor.$inject = ['$q'];
 		/* @ngInject */
-		function HttpErrorInterceptor() {
+		function HttpErrorInterceptor($q) {
 			
 	        var service = {
 		            responseError: responseError
@@ -27,16 +35,19 @@
 	        function responseError(error) {
 	        	
 	        	switch (error.status) {
-				case 401:
-					console.log('Unauthorized '+error.status)
-					
-					// @todo: Redirect somewhere else
-					break;
-
-				default:
-					// @todo: Code What to do with unknown errors
-					break;
+					case 401:
+						console.log('Unauthorized '+ error.status);
+						
+						// @todo: Redirect somewhere else
+						break;
+	
+					default:
+						// @todo: Code What to do with unknown errors
+						// @todo: Code what to do with error 500, 404
+						break;
 				}
+	        	
+	        	return $q.reject(error);
 	        }
 	        
 		}

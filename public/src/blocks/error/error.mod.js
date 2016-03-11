@@ -1,5 +1,6 @@
-/*
+/**
  * wi.blocks.error
+ * 
  * Error Handler
  * 
  * This module handles application Errors
