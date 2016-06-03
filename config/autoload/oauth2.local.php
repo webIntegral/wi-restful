@@ -18,5 +18,8 @@ return array(
         'access_lifetime' => 3600, // default (set a value in seconds for access tokens lifetime)
         'enforce_state'  => true,  // default
         'storage'        => 'oauth2.doctrineadapter.default', // service name for the OAuth2 storage adapter
+        'options' => array(
+            'always_issue_new_refresh_token' => true, // This issues a new refresh token on every refresh
+        ),
     ),
 );

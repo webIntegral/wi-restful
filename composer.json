@@ -4,17 +4,17 @@
   "require" : {
     "php" : ">=5.3.3",
     "zendframework/zendframework" : "~2.4",
-    "doctrine/doctrine-module": "0.*",
+    "doctrine/doctrine-module" : "0.*",
     "doctrine/doctrine-orm-module" : "0.*",
-    "gedmo/doctrine-extensions": "2.3.*",
-    "zfcampus/zf-apigility": "~1.0",
-    "api-skeletons/zf-oauth2-doctrine": "1.0.1"
+    "gedmo/doctrine-extensions" : "v2.4.13",
+    "zfcampus/zf-apigility" : "~1.0",
+    "api-skeletons/zf-oauth2-doctrine" : "1.0.4"
+  },
+  "require-dev" : {
+    "zfcampus/zf-apigility-admin" : "~1.0",
+    "zfcampus/zf-development-mode" : "~2.0"
   },
   "license" : "BSD-3-Clause",
   "keywords" : [ "framework", "zf2" ],
-  "homepage" : "http://framework.zend.com/",
-  "require-dev": {
-    "zfcampus/zf-apigility-admin": "~1.0",
-    "zfcampus/zf-development-mode": "~2.0"
-  }
+  "homepage" : "http://framework.zend.com/"
 }
