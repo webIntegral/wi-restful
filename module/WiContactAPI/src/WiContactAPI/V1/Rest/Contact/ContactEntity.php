@@ -19,7 +19,7 @@ class ContactEntity
      *      @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
+    
     /**
      *
      * @var string @ORM\Column(type="string", nullable=true)

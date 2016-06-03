@@ -88,16 +88,15 @@ return array(
         'configuration' => array(
             'orm_default' => array(
                 'filters' => array(
-                    // Filter for softdeleteable doctrine extension
-                    'soft-deleteable' => 'Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter'
+                    'soft-deleteable' => 'Gedmo\\SoftDeleteable\\Filter\\SoftDeleteableFilter',
                 ),
             ),
         ),
         'eventmanager' => array(
             'orm_default' => array(
                 'subscribers' => array(
-                    'Gedmo\Timestampable\TimestampableListener',
-                    'Gedmo\SoftDeleteable\SoftDeleteableListener'
+                    0 => 'Gedmo\\Timestampable\\TimestampableListener',
+                    1 => 'Gedmo\\SoftDeleteable\\SoftDeleteableListener',
                 ),
             ),
         ),
