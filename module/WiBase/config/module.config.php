@@ -48,6 +48,14 @@ return array(
             'WiBase' => __DIR__ . '/../view'
         )
     ),
+    
+    // Layout configuration
+    'module_layouts' => array(
+        'WiBase' => array(
+            'default' => 'layout/default'
+        )
+    ),
+    
     'doctrine' => array(
         'driver' => array(
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
