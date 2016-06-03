@@ -19,11 +19,6 @@
 	    <link rel="stylesheet" href="/components/components-font-awesome/css/font-awesome.min.css">
     <!-- /styles -->
     
-    <!-- app styles -->
-    	<!-- Estilos Template Dashboard -->
-		<link rel="stylesheet" href="/src/layout/dashboard.css">   
-    <!-- /app styles -->
-    
 	<!-- scripts -->
 		<!-- jquery -->
 		<script src="/components/jquery/dist/jquery.min.js"></script>
@@ -42,7 +37,22 @@
 		<script src="/src/resource/contact/contact.res.js"></script>
 		<!-- auth module -->
 		<script src="/src/oauth/oauth.mod.js"></script>
+		<script src="/src/oauth/auth.srv.js"></script>
 	<!-- app -->
+	
+	<!-- resource -->
+		<!-- currentUser -->
+		<script src="/src/resource/currentUser/currentUser.mod.js"></script>
+		<script src="/src/resource/currentUser/currentUser.res.js"></script>
+		<!-- currentUser -->
+		<script src="/src/resource/logout/logout.mod.js"></script>
+		<script src="/src/resource/logout/logout.res.js"></script>
+	<!-- resource -->
+		<script src="/src/blocks/error/error.mod.js"></script>
+		<script src="/src/blocks/error/httpErrorInterceptor.prv.js"></script>
+	<!-- error -->
+		
+	<!-- error -->
 	
 	<!-- Test Script -->
 		<script>
@@ -53,6 +63,7 @@
 				.module('test.module', [
 	                // Inject modules to test
 	                'wi.oauth',
+	                'wi.blocks.error',
 				 	'wi.resource.contact'
 	            ]);
 	            
@@ -61,90 +72,79 @@
 	        	.controller('TestCtr', TestCtr);
 	        
 	        // Inject GridBarSrv to modify grid bar configuration
-	        TestCtr.$inject = ['$scope', '$q', 'ContactResource', '$auth'];
+	        TestCtr.$inject = ['$scope', '$q', '$auth', 'AuthService'];
 	        
-	        function TestCtr ($scope, $q, ContactResource, $auth) {
+	        function TestCtr ($scope, $q, $auth, AuthService) {
 	        	/* jshint validthis: true */
 	        	var vm = this;
 	        	
-	        	vm.contacts = [];
-	        	vm.user = {
-	     		    grant_type: 'password',
+	        	vm.credentials = {
 	     		    username: 'test',
 	     		    password: 'test',
-	     		    client_id: 'restful-wi'
 	        	};
-	        	vm.areyouin = false;
 	        	vm.login = login;
 	        	vm.logout = logout;
+	        	vm.getUser = getUser;
+	        	vm.refreshToken = refreshToken;
 	        	vm.isAuthenticated = isAuthenticated;
-	        	vm.fetchAll = fetchAll;
 	        	
 	        	activate();
 	        	
+	        	///////////
+	        	
 	        	function activate() {
-	        		vm.isAuthenticated()
-	        		if (vm.areyouin) {
-	        			vm.fetchAll();
-	        		}
-	        		vm.fetchAll();
 	        		
-	        	} // activate
+	        	}
 	        	
-	        	// Login action
 	        	function login() {
-	        		$auth.authenticate( 'restful-wi', vm.user )
-	                	.then( function( response ) {
-	                		
-	                		vm.isAuthenticated();
-	                		vm.fetchAll();
-	                		
-                  		// Redirect to app root, in
-	                  	// window.location.href = '/';
-	                })
-	                .catch( function( response ) {
-	                		
-	                		vm.isAuthenticated();
-	                	
-	                	// catch errors:
-	                	// 401 Invalid grant/Unauthorized
-	                });
-	        	}
-	        	
-	        	// Logout
-	        	// @todo: Logout action should include a request to kill this session in the server
-	        	function logout() {
-	        		$auth.logout();
-	        		vm.isAuthenticated();
-	        		vm.contacts = [];
-	        	}
-	        	
-	        	// Check if authenticated
-	        	function isAuthenticated() {
-	        		vm.areyouin = $auth.isAuthenticated();
-        		};
-	        	
-	        	// Get all data
-	        	function fetchAll() {
-	        		// Query the resource
-	        		ContactResource.query(
-        				{
-	        				page: 1,
-	        				page_size:33,
-	        				search: null,
-	        				sorts: null
-	        			}
-	        		// On success
-	        		).$promise.then(function(data) {
-	        			// Load result on appropiated var
-	        			vm.contacts = data._embedded.contact;
-        			// On error
-	        		}, function(error) {
-	        			// Alert
-	        			alert('Query method error on ContactResource.');
+	        		// Request to hold route
+	        		///AuthService.holdRoute('/myRoute');
+	        		// Request login
+	        		AuthService.login(vm.credentials)
+	        			.then(function(data) {
+	        				console.log('Login successful');
+	        			}).catch(function(error) {
+        					console.log(error.data.detail);
 	        		});
-	        	}; // fetch all
+	        	}
 	        	
+	        	function logout() {
+	        		AuthService.logout()
+		        		.then(function(data) {
+	        				console.log('Logout successful');
+	        			}).catch(function(error) {
+	    					console.log(error.data.detail);
+	        		});
+	        	}
+	        	
+	        	function getUser() {
+	        		AuthService.getUser()
+	        			.then(function(data) {
+	        				console.log(data.id);
+	        				console.log(data.username);
+	        				console.log(data.role);
+	        			}).catch(function(error) {
+	    					error;
+        			});
+	        	}
+	        	
+	        	function refreshToken() {
+	        		AuthService.getNewToken()
+	        			.then(function() {
+	        				console.log('Token refreshed.');
+	        			}).catch(function(error) {
+	        				console.log(error)
+        			});
+	        	}
+	        	
+	        	function isAuthenticated() {
+	        		AuthService.isAuthenticated()
+	        			.then(function() {
+	        				console.log('Yes, it is Authenticated.');
+	        			}).catch(function() {
+	        				console.log('No, it is not Authenticated.')
+    				});
+	        	}
 	        }
 		</script>
 	<!-- /Test Script -->
@@ -192,11 +192,18 @@
       		
 				<form>
 					<label for="username">Username</label><br>
-					<input class="form-control" name="username" ng-model="vm.user.username"><br>
+					<input class="form-control" name="username" ng-model="vm.credentials.username"><br>
 					<label for="password">Password</label><br>
-					<input class="form-control" name="password" ng-model="vm.user.password"><br>
+					<input class="form-control" name="password" ng-model="vm.credentials.password"><br>
 					<button type="button" ng-click="vm.login()">Login</button>
 					<button type="button" ng-click="vm.logout()">Logout</button>
+					<br>
+					<button type="button" ng-click="vm.getUser()">Get User</button>
+					<br>
+					<button type="button" ng-click="vm.refreshToken()">Refresh Token</button>
+					<br>
+					<button type="button" ng-click="vm.isAuthenticated()">¿is Authenticated?</button>
+					
 				</form>
 				<h3>Status</h3>
 				<p ng-if="!vm.areyouin">No autenticado</p>

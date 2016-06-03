@@ -1,0 +1,116 @@
+<div class="row">
+	<div class="page-header">
+		<h3>Buscar Afiliado</h3>
+	</div>
+
+	<form name="searchAfiliadoForm">
+		<div class="form-group col-sm-5">
+			<label>Tipo de Documento:</label>
+            <select ng-model="vm.search.tipoDocumento" ng-disabled="vm.busy" class="form-control">
+                <option value="1">CC</option>
+                <option value="2">NIT</option>
+                <option value="3">TI</option>
+                <option value="4">CE</option>
+                <option value="5">FN</option>
+                <option value="6">RC</option>
+                <option value="7">NUIP</option>
+            </select>
+		</div>
+		
+		<div class="form-group col-sm-5">
+			<label>Número de Documento:</label>
+			<input ng-model="vm.search.numeroDocumento" ng-keypress="vm.searchKey($event)" ng-disabled="vm.busy" type="text" class="form-control" name="numeroDocumento" placeholder="Número de Document" required>
+		</div>
+		
+		<div class="form-group col-sm-2">
+			<label>&nbsp;</label><br>
+			<button ng-click="vm.doSearch()" ng-disabled="vm.busy || searchAfiliadoForm.numeroDocumento.$error.required" type="button" class="btn btn-primary">
+				<i class="fa fa-search"></i> <span class="hidden-sm hidden-xs">Buscar</span>
+			</button>
+			<span ng-show="vm.busy" class="pull-right wi-busy-icon"><i class="fa fa-spinner fa-pulse"></i></span>
+			<button ng-show="vm.error" uib-popover="{{vm.error}}" popover-trigger="mouseenter" popover-placement="bottom-left" type="button" class="btn btn-danger pull-right">
+				<i class="fa fa-exclamation-triangle"></i>
+			</button>
+		</div>
+	</form>
+</div>
+
+<hr>
+
+<div class="row" ng-show="!vm.empty">
+
+	<div class="row">
+		<div class="col-md-12">
+			<button ng-click="vm.goBack()" type="button" class="btn btn-default"><i class="fa fa-reply"></i><span class="hidden-xs"> Volver</span></button>
+			<button ng-click="vm.gotoExamenes()" ng-show="vm.acl.allowExamenes" type="button" class="btn btn-default"><i class="fa fa-heartbeat"></i><span class="hidden-xs"> Exámenes</span></button>
+			<button ng-click="vm.gotoCitas()" ng-show="vm.acl.allowCitas" type="button" class="btn btn-default"><i class="fa fa-calendar-o"></i><span class="hidden-xs"> Citas</span></button>
+			<button ng-click="vm.gotoAutorizaciones()" ng-show="vm.acl.allowAutorizaciones" type="button" class="btn btn-default"><i class="fa fa-stethoscope"></i><span class="hidden-xs"> Autorizaciones</span></button>
+		</div>
+	</div>
+	
+	<hr>
+	
+	<div class="row">
+		<div class="col-md-2">
+			<div ng-click="" style="margin-bottom: 10px; padding: 1em 2em 0 2em; border: 0.08em solid #eee; border-radius: 0.5em; background-color: #EEEEEE;">
+				<p ng-class="vm.entity.EstadoPOS != 'AF' ? 'text-danger' : ''" class="text-center lead">
+					<i class="fa fa-user" style="font-size: 5em;"></i><br>
+					<span ng-show="vm.entity.EstadoPOS == 'AF'">Afiliado</span>
+					<span ng-show="vm.entity.EstadoPOS != 'AF'">¡Ver Afiliación!</span>
+				</p>
+			</div>
+		</div>
+		
+		<div class="col-md-5">
+			<p><strong>#:</strong> {{vm.entity.id}}</p>
+			<p><strong>Nombre:</strong> {{vm.entity.Nombre}} {{vm.entity.PrimerApellido}} {{vm.entity.SegundoApellido}}</p>
+			<p><strong>TIdBeneficiario:</strong> {{vm.entity.TIdBeneficiario}}</p>
+			<p><strong>IDBeneficiario:</strong> {{vm.entity.IDBeneficiario}}</p>
+			<p><strong>Sexo:</strong> {{vm.entity.Sexo}}</p>
+			<p><strong>FechaNacimiento:</strong> {{vm.entity.FechaNacimiento}}</p>
+			<p><strong>Estrato:</strong> {{vm.entity.Estrato}}</p>
+			<p><strong>EstadoPOS:</strong> {{vm.entity.EstadoPOS}}</p>
+			<p><strong>EstadoPCO:</strong> {{vm.entity.EstadoPCO}}</p>
+			<p><strong>CodigoPCO:</strong> {{vm.entity.CodigoPCO}}</p>
+		</div>
+		
+		<div class="col-md-5">
+			<p><strong>TidTrabajador:</strong> {{vm.entity.TidTrabajador}}</p>
+			<p><strong>IDTrabajador:</strong> {{vm.entity.IDTrabajador}}</p>
+			<p><strong>Parentesco:</strong> {{vm.entity.Parentesco}}</p>
+			<p><strong>TidEmpresa:</strong> {{vm.entity.TidEmpresa}}</p>
+			<p><strong>IDEmpresa:</strong> {{vm.entity.IDEmpresa}}</p>
+			<p><strong>cDependencia:</strong> {{vm.entity.cDependencia}}</p>
+			<p><strong>FechaIngresoPCO:</strong> {{vm.entity.FechaIngresoPCO}}</p>
+			<p><strong>AcumCopago:</strong> {{vm.entity.AcumCopago}}</p>
+			<p><strong>SemanasCotizadas:</strong> {{vm.entity.SemanasCotizadas}}</p>
+			<p><strong>SedeCapita:</strong> {{vm.entity.SedeCapita}}</p>
+		</div>	
+	</div>
+	
+	<hr>
+	
+	<div class="row">
+		<form name="afiliadoContactForm">
+			<div class="form-group col-sm-5">
+				<label>Móvil:</label>
+				<input ng-model="vm.entity.movil" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-disabled="vm.busy" type="text" class="form-control" name="movil" placeholder="Móvil" required>
+			</div>
+			
+			<div class="form-group col-sm-5">
+				<label>Teléfono:</label>
+				<input ng-model="vm.entity.telefono" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-disabled="vm.busy" type="text" class="form-control" name="telefono" placeholder="Teléfono" required>
+			</div>
+			
+			<div class="form-group col-sm-2">
+				<label>&nbsp;</label><br>
+				<button ng-click="vm.save()" ng-show="vm.acl.allowEdit" ng-disabled="vm.busy" ng-class="vm.hasChanges ? 'btn-success' : ''" type="button" class="btn btn-default">
+					<i class="fa fa-floppy-o" aria-hidden="true"></i> <span class="hidden-sm hidden-xs">Guardar</span>
+				</button>
+			</div>
+		</form>
+	</div>
+	
+</div>
+
+<div ng-show="vm.empty && vm.showAlert" class="alert alert-info" role="alert"><strong>Afiliado no encontrado:</strong> No se encontró ningún afiliado con los datos suministrados. Por favor verifique los datos e intente de nuevo</div>

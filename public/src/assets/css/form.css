@@ -1,0 +1,13 @@
+/**
+ * Styles for forms
+ */
+
+/* Add some margin after button bar */
+.wi-form-button-bar {
+	margin-bottom: 15px;
+}
+
+/* Vertical center busy icon */
+.wi-busy-icon {
+	padding: 6px 0px;
+}

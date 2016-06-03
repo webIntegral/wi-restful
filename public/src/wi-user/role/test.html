@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test.module">
+<head>
+	<base href="/">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/assets/img/favicon.png">
+    
+    <title>Test Module Role</title>
+    
+	<!-- styles -->
+	    <!-- Bootstrap -->
+	    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+	    <!-- fontawesome -->
+	    <link rel="stylesheet" href="/components/components-font-awesome/css/font-awesome.min.css">
+		<!-- ui-grid -->
+	    <link rel="stylesheet" href="/components/angular-ui-grid/ui-grid.min.css">
+    	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    	<link rel="stylesheet" href="/src/assets/css/ie10-viewport-bug-workaround.css">
+    <!-- /styles -->
+    
+    <!-- app styles -->
+    	<!-- layout -->
+		<link rel="stylesheet" href="/src/assets/css/layout.css">
+		<!-- datagrid -->
+		<link rel="stylesheet" href="/src/assets/css/datagrid.css">
+		<!-- form -->
+		<link rel="stylesheet" href="/src/assets/css/form.css">
+    <!-- /app styles -->
+    
+	<!-- scripts -->
+		<!-- jquery -->
+		<script src="/components/jquery/dist/jquery.min.js"></script>
+		<!-- angular -->
+		<script src="/components/angular/angular.min.js"></script>
+		<!-- uiBootstrap -->
+		<script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<script src="/components/angular-i18n/angular-locale_es-es.js"></script>
+		<script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    	<!-- satellizer -->
+    	<script src="/components/satellizer/satellizer.min.js"></script>
+		<!-- uiRouter -->
+		<script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<!-- ngResource -->
+		<script src="/components/angular-resource/angular-resource.min.js"></script>
+		<!-- ui-grid -->
+		<script src="/components/angular-ui-grid/ui-grid.min.js"></script>
+	<!-- /scripts -->
+	
+	<!-- layout -->
+		<!-- nav -->
+		<script src="/src/cp-app/layout/nav/nav.mod.js"></script>
+		<script src="/src/cp-app/layout/nav/nav.dir.js"></script>
+	<!--/ Layout -->
+	
+	<!-- Auth -->
+    	<!-- wi.oauth -->
+    	<script src="/src/oauth/oauth.mod.js"></script>
+    	<script src="/src/oauth/auth.srv.js"></script>
+	<!--/ Auth -->
+	
+	<!-- router -->
+		<!-- wi.blocks.router -->
+    	<script src="/src/blocks/router/router.mod.js"></script>
+    	<script src="/src/blocks/router/router.prv.js"></script>
+	<!-- /router -->
+	
+	<!-- error -->
+		<!-- wi.blocks.error -->
+    	<!--<script src="/src/blocks/error/error.mod.js"></script>
+    	<script src="/src/blocks/error/httpErrorInterceptor.prv.js"></script>-->
+	<!-- /error -->
+	
+	<!-- services -->
+		<!-- date formater -->
+		<script src="/src/services/formaters/formaters.mod.js"></script>
+		<script src="/src/services/formaters/dateFmtr.srv.js"></script>
+	<!--/ services -->
+	
+	<!-- Resources -->
+		<!-- afiliado -->
+		<script src="/src/resource/role/role.mod.js"></script>
+		<script src="/src/resource/role/role.res.js"></script>
+	<!-- /resource -->
+	
+	<!-- module to test -->
+		<!-- afiliado -->
+		<script src="/src/wi-user/role/role.mod.js"></script>
+		<script src="/src/wi-user/role/role.routes.js"></script>
+		<!-- afiliado grid -->
+		<script src="/src/wi-user/role/search/grid/roleGrid.mod.js"></script>
+		<script src="/src/wi-user/role/search/grid/roleGrid.routes.js"></script>
+		<script src="/src/wi-user/role/search/grid/roleGrid.ctr.js"></script>
+		<!-- afiliado form -->
+		<script src="/src/wi-user/role/edit/form/roleForm.mod.js"></script>
+		<script src="/src/wi-user/role/edit/form/roleForm.routes.js"></script>
+		<script src="/src/wi-user/role/edit/form/roleForm.ctr.js"></script>
+	<!-- /module to test -->
+	
+	<!-- Test Script -->
+		<script>
+			/*
+			 * Test Script.
+			 * Test wi.nav.main module
+			 */
+			angular
+				.module('test.module', [
+					'wi.blocks.router',
+					//wi.oauth,
+					'wi.role'
+	            ]);
+	            
+	        angular
+	        	.module('test.module')
+       			.run(moduleRun)
+	        	.controller('TestCtr', TestCtr);
+	        	
+	        	/* @ngInject */
+	        	function moduleRun(routerHelper) {
+	        	    routerHelper.configureStates(getStates(), '/');
+	        	}
+	        	
+	        	function getStates() {
+	        		return [
+	        		        
+           		        // Mock Main route 
+           		        {
+           		        	state: 'main',
+           		        	config: {
+           		        		url: '/',
+           		        		template: '<div>Main State</div><div ui-view></div>',
+           		        		controller: function() {},
+           		        		controllerAs: 'vm',
+           	        			access: {
+           		                    login: true,
+           		                    allowedRoles: ['Admin']
+           	        			}
+           		        	}
+           		        }/*,
+           		        
+           		        // Mock Edit/Create Route
+				        {
+				        	state: 'main.role.edit',
+				        	config: {
+				        		url: '/{roleId}',
+				        		views: {
+				        			'': {
+						        		template: '<div>Role Edit</div>',
+						        		controller: function() {},
+						        		controllerAs: 'vm',
+						        		resolve:{
+						        			acl: function() {
+						        				return {
+			
+						        				}
+						        			}
+						        		}
+				        			}
+				        		},
+				        		access: {
+				        			login: false,
+				        			allowedRoles: ['Admin']
+				        		}
+				        	}
+				        }*/
+           		        
+	                ];
+	        	} // getStates
+	        
+	        // Inject dependencies
+	        TestCtr.$inject = ['$scope', '$q'];
+	        
+	        function TestCtr ($scope, $q) {
+	        	/* jshint validthis: true */
+	        	var vm = this;
+	        } // TestCtr
+		</script>
+	<!-- /Test Script -->
+	
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script>
+		/*!
+		 * IE10 viewport hack for Surface/desktop Windows 8 bug
+		 * Copyright 2014-2015 Twitter, Inc.
+		 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+		 */
+
+		// See the Getting Started docs for more information:
+		// http://getbootstrap.com/getting-started/#support-ie10-width
+
+		(function () {
+		  'use strict';
+
+		  if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+		    var msViewportStyle = document.createElement('style')
+		    msViewportStyle.appendChild(
+		      document.createTextNode(
+		        '@-ms-viewport{width:auto!important}'
+		      )
+		    )
+		    document.querySelector('head').appendChild(msViewportStyle)
+		  }
+
+		})();
+	</script>
+	<!--/ IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container-fluid main">
+    	<ul>
+    		<li><a ui-sref="main.role.list"><i class="fa fa-user-md" aria-hidden="true"></i> Role</a></li>
+    	</ul>
+    	<div ui-view></div><!-- this is the root view -->
+    </div><!-- /.container-fluid -->
+</body>
+</html>

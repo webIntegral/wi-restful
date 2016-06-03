@@ -1,9 +1,12 @@
-<form name="loginform" class="form-signin" ng-controller="WiLoginCtr as vm">
-	<h2 class="form-signin-heading">Please sign in</h2>
-	<label for="inputEmail" class="sr-only">Username</label>
-	<input ng-model="vm.user.username" name="username" type="text" class="form-control" placeholder="Username" required autofocus>
-	<label for="inputPassword" class="sr-only">Password</label>
-	<input ng-model="vm.user.password" name="password" type="password" class="form-control" placeholder="Password" required>
-	<button ng-click="vm.login()" ng-disabled="loginform.username.$error.required || loginform.password.$error.required || vm.signing" type="submit" class="btn btn-lg btn-primary btn-block"><span ng-show="!vm.signing">Sign in</span><span ng-show="vm.signing"><i class="fa fa-spinner fa-pulse"></i> Signing in...</span></button>
-	<div ng-show="vm.error" class="alert alert-danger" role="alert">{{vm.errorMsg}}.</div>
+<form name="loginform" class="form-signin">
+	<h2 class="form-signin-heading">Ingresar</h2>
+	<label for="inputEmail" class="sr-only">Usuario</label>
+	<input ng-model="vm.credentials.username" name="username" type="text" class="form-control" placeholder="Usuario" required autofocus>
+	<label for="inputPassword" class="sr-only">Contraseña</label>
+	<input ng-model="vm.credentials.password" name="password" type="password" class="form-control" placeholder="Contraseña" required>
+	<button ng-click="vm.login()" ng-disabled="loginform.username.$error.required || loginform.password.$error.required || vm.busy" type="submit" class="btn btn-lg btn-primary btn-block">
+		<span ng-show="!vm.busy">Ingresar</span>
+		<span ng-show="vm.busy"><i class="fa fa-spinner fa-pulse"></i> Ingresando...</span>
+	</button>
+	<div ng-show="vm.error" class="alert alert-danger" role="alert">{{vm.error}}.</div>
 </form>

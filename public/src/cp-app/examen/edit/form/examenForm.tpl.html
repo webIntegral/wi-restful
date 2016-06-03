@@ -1,0 +1,90 @@
+<div class="page-header">
+	<h3>Examen</h3>
+</div>
+
+<form>
+	<div ng-include="'/src/cp-app/layout/bar/fromButtons.tpl.html'"></div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<label>Causa Externa:</label>
+			<select class="form-control" ng-change="vm.changed()" ng-model="vm.entity.tmp.codigoCausaExterna">
+				<option value="1">Accidente de Trabajo</option>
+				<option value="2">Accidente de Tránsito</option>
+				<option value="3">Accidente Rábico</option>
+				<option value="4">Accidente Ofídico</option>
+				<option value="5">Otro tipo de Accidente</option>
+				<option value="6">Evento Catastrófico</option>
+				<option value="7">Lesión por Agresión</option>
+				<option value="8">Lesión Autoinflingida</option>
+				<option value="9">Sospecha por Maltrato Físico</option>
+				<option value="10">Sospecha de Abuso Sexual</option>
+				<option value="11">Sospecha de Violencia Sexual</option>
+				<option value="12">Sospecha de Maltrato Emocional</option>
+				<option value="13">Enfermedad General</option>
+				<option value="14">Enfermedad Profesional</option>
+				<option value="15">Otros</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Valor Costo EPS:</label>
+			<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.tmp.valorCostoEps" placeholder="Valor Costo EPS">
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Valor Cuota Moderadora:</label>
+			<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.tmp.valorCuotaModeradora" placeholder="Valor Cuota Moderadora">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<label>Clase de Servicio:</label>
+			<select class="form-control" ng-change="vm.changed()" ng-model="vm.entity.tmp.codigoClaseServicio">
+				<option value="0">Servicio Programado</option>
+				<option value="1">Servicio Prioritario</option>
+				<option value="2">Servicio de Urgencias</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Médico:</label><span ng-show="vm.loadingMedico" class="pull-right"><i class="fa fa-spinner fa-pulse"></i></span>
+			<input ng-model="vm.entity._embedded.medico" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" uib-typeahead="medico as medico.nombre+' - '+medico.especialidad for medico in vm.getMedico($viewValue)" typeahead-loading="vm.loadingMedico" typeahead-no-results="noResults" typeahead-editable="false" type="text" class="form-control" placeholder="Médico">
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Tipo de Examen:</label>
+			<select ng-model="vm.entity._embedded.examenTipo" ng-change="vm.tipoExamenChange()" ng-disabled="!vm.acl.allowEdit" ng-options="item as item.tipo for item in vm.examenTipo track by item.id" class="form-control"></select>
+		</div>
+	</div>
+ 	
+	<div class="row">
+		<div class="form-group col-sm-12">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.definitivo" ng-change="vm.changed()" ng-click="vm.isEditable($event)" type="checkbox"> ¿Guardar Definitivo? <span class="small">No podrá editar este registro después de guardarlo.</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>
+		
+	<div ng-if="1 == vm.entity._embedded.examenTipo.id" ng-include="'/src/cp-app/examen/edit/form/tpl/parcialOrina.tpl.html'"></div>
+	<div ng-if="2 == vm.entity._embedded.examenTipo.id" ng-include="'/src/cp-app/examen/edit/form/tpl/coprologico.tpl.html'"></div>
+	<div ng-if="3 == vm.entity._embedded.examenTipo.id" ng-include="'/src/cp-app/examen/edit/form/tpl/hematologia.tpl.html'"></div>
+	<div ng-if="4 == vm.entity._embedded.examenTipo.id" ng-include="'/src/cp-app/examen/edit/form/tpl/quimicaSanguinea.tpl.html'"></div>
+	<div ng-if="5 == vm.entity._embedded.examenTipo.id" ng-include="'/src/cp-app/examen/edit/form/tpl/inmunologia.tpl.html'"></div>
+	<div ng-if="6 == vm.entity._embedded.examenTipo.id" ng-include="'/src/cp-app/examen/edit/form/tpl/frotisVaginal.tpl.html'"></div>
+	
+	<hr>
+	
+	<div class="row">
+		<div class="form-group col-sm-12">
+			<label>Solicitud XML:</label>
+			<textarea class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.xmlRequest" placeholder="Solicitud XML"></textarea>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-12">
+			<label>Respuesta XML:</label>
+			<textarea class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.xmlResponse" placeholder="Respuesta XML"></textarea>
+		</div>
+	</div>
+</form>

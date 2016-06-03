@@ -1,0 +1,199 @@
+<div class="page-header">
+	<h3>Afiliado</h3>
+</div>
+
+<form>
+
+	<div class="row wi-form-button-bar">
+		<div class="col-sm-6">
+			<button ng-click="vm.goBack()" ng-show="vm.acl.showGoBack" ng-disabled="vm.busy" type="button" class="btn btn-default">
+				<i class="fa fa-reply"></i><span class="hidden-sm hidden-xs"> Volver</span>
+			</button>
+			<button ng-click="vm.save()" ng-show="vm.acl.allowEdit" ng-disabled="vm.busy" ng-class="vm.hasChanges ? 'btn-success' : ''" type="button" class="btn btn-default">
+				<i class="fa fa-floppy-o"></i><span class="hidden-sm hidden-xs"> Guardar</span>
+			</button> 
+		</div>
+		<div class="col-sm-6">
+			<button ng-click="vm.gotoExamenes()" ng-show="vm.acl.allowExamenes" ng-disabled="vm.busy" type="button" class="btn btn-default">
+				<i class="fa fa-heartbeat"></i><span class="hidden-sm hidden-xs"> Exámenes</span>
+			</button>
+			<span ng-show="vm.busy" class="pull-right wi-busy-icon"><i class="fa fa-spinner fa-pulse"></i></span>
+			<button ng-show="vm.error" uib-popover="{{vm.error}}" popover-trigger="click" popover-placement="left" popover-is-open="vm.error != false" type="button" class="btn btn-danger pull-right">
+				<i class="fa fa-exclamation-triangle"></i>
+			</button>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-3">
+			<label>Tipo ID Beneficiario:</label>
+            <select ng-options="item.id as item.label for item in vm.tiposId" ng-model="vm.entity.tidBeneficiario" class="form-control">
+                
+            </select>
+		</div>
+		<div class="form-group col-sm-3">
+			<label>ID Beneficiario:</label>
+			<input ng-model="vm.entity.idBeneficiario" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="ID Beneficiario">
+		</div>
+		<div class="form-group col-sm-3">
+			<label>NUIP:</label>
+			<input ng-model="vm.entity.nuip" ng-change="vm.changed()" ng-disabled="7 != vm.entity.tidBeneficiario" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="NUIP">
+		</div>
+		<div class="form-group col-sm-3">
+			<label>Tipo Paciente:</label>
+            <select ng-model="vm.entity.tipoPaciente" class="form-control">
+                <option value="1">Particular</option>
+                <option value="2">Afiliado</option>
+            </select>
+		</div>
+	</div>
+ 	
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<label>Nombre:</label>
+			<input ng-model="vm.entity.nombre" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Nombre">
+		</div>
+		<div class="form-group col-sm-6">
+			<label>Apellido:</label>
+			<input ng-model="vm.entity.apellido" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Apellido">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<label>Fecha de Nacimiento:</label>
+			<div class="input-group">
+				<input ng-model="vm.entity.fechaNacimiento.date" 
+					ng-disabled="true" 
+					ng-change="vm.changed()" 
+					ng-keypress="vm.isEditable($event)" 
+					uib-datepicker-popup="yyyy-MM-dd" 
+					is-open="vm.controls.fechaNacimiento.opened" 
+					clear-text="limpiar" 
+					current-text="Hoy" 
+					close-text="Cerrar" 
+					type="text" 
+					class="form-control">
+			    <span class="input-group-btn">
+	            	<button type="button" class="btn btn-default" ng-click="vm.toggleFechaNacimiento()"><i class="glyphicon glyphicon-calendar"></i></button>
+	          	</span>
+          	</div>
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Edad:</label>
+			<input ng-model="vm.entity.edad" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Edad">
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Sexo:</label>
+            <select ng-model="vm.entity.sexo" class="form-control">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<label>Estado Afiliación en Caja:</label>
+			<input ng-model="vm.entity.caja" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Estado Afiliación en Caja">
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Estado Afiliación en POS:</label>
+			<input ng-model="vm.entity.pos" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Estado Afiliación en POS">
+		</div>
+		<div class="form-group col-sm-4">
+			<label>Estado Afiliación PC:</label>
+			<input ng-model="vm.entity.pc" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Estado Afiliación PC">
+		</div>
+	</div>
+	
+	<hr>
+	
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<label>Fecha Asignación:</label>
+			<div class="input-group">
+				<input ng-model="vm.entity.fechaAsignacion.date"
+					ng-disabled="true"  
+					ng-change="vm.changed()" 
+					ng-keypress="vm.isEditable($event)" 
+					uib-datepicker-popup="yyyy-MM-dd" 
+					is-open="vm.controls.fechaAsignacion.opened" 
+					clear-text="limpiar" 
+					current-text="Hoy" 
+					close-text="Cerrar" 
+					type="text" 
+					class="form-control">
+			    <span class="input-group-btn">
+	            	<button type="button" class="btn btn-default" ng-click="vm.toggleFechaAsignacion()"><i class="glyphicon glyphicon-calendar"></i></button>
+	          	</span>
+          	</div>
+		</div>
+		<div class="form-group col-sm-6">
+			<label>Fecha Afiliación:</label>
+			<div class="input-group">
+				<input ng-model="vm.entity.fechaAfiliacion.date"
+					ng-disabled="true" 
+					ng-change="vm.changed()" 
+					ng-keypress="vm.isEditable($event)" 
+					uib-datepicker-popup="yyyy-MM-dd" 
+					is-open="vm.controls.fechaAfiliacion.opened" 
+					clear-text="limpiar" 
+					current-text="Hoy" 
+					close-text="Cerrar" 
+					type="text" 
+					class="form-control">
+			    <span class="input-group-btn">
+	            	<button type="button" class="btn btn-default" ng-click="vm.toggleFechaAfiliacion()"><i class="glyphicon glyphicon-calendar"></i></button>
+	          	</span>
+          	</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="form-group col-sm-3">
+			<label>Tipo ID Trabajador:</label>
+            <select ng-options="item.id as item.label for item in vm.tiposId" ng-model="vm.entity.tidTrabajador" class="form-control">
+            </select>
+		</div>
+		<div class="form-group col-sm-3">
+			<label>ID Trabajador:</label>
+			<input ng-model="vm.entity.idTrabajador" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="ID Trabajador">
+		</div>
+		<div class="form-group col-sm-6">
+			<label>Cotizante:</label>
+			<input ng-model="vm.entity.cotizante" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Cotizante">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<label>Teléfono Cotizante:</label>
+			<input ng-model="vm.entity.telefonoCotizante" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Teléfono Cotizante">
+		</div>
+		<div class="form-group col-sm-6">
+			<label>Dirección Cotizante:</label>
+			<input ng-model="vm.entity.direccionCotizante" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Dirección Cotizante">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-3">
+			<label>Régimen:</label>
+			<input ng-model="vm.entity.regimen" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control">
+		</div>
+		<div class="form-group col-sm-3">
+			<label>Estrato:</label>
+			<input ng-model="vm.entity.estrato" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control">
+		</div>
+		<div class="form-group col-sm-3">
+			<label>NIT:</label>
+			<input ng-model="vm.entity.nit" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control">
+		</div>
+		<div class="form-group col-sm-3">
+			<label>Sede:</label>
+			<input ng-model="vm.entity.sede" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control">
+		</div>
+	</div>
+	
+</form>

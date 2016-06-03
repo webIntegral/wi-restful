@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="form-group col-sm-6">
+		<button ng-click="vm.goBack()" ng-show="vm.cfg.showGoBack" ng-disabled="vm.busy" type="button" class="btn btn-default">
+			<i class="fa fa-reply"></i><span class="hidden-sm hidden-xs"> Volver</span>
+		</button>
+		<button ng-click="vm.select()" ng-show="vm.cfg.showSelect" ng-disabled="!vm.selected || vm.busy" type="button" class="btn btn-default">
+			<i class="fa fa-check"></i></i><span class="hidden-sm hidden-xs"> Seleccionar</span>
+		</button>
+		<button ng-click="vm.create()" ng-show="vm.acl.create && vm.cfg.showCreate" ng-disabled="vm.busy" type="button" class="btn btn-default">
+			<i class="fa fa-plus"></i><span class="hidden-sm hidden-xs"> Crear</span>
+		</button>
+		<button ng-click="vm.refresh()" ng-show="vm.cfg.showRefresh" ng-disabled="vm.busy" type="button" class="btn btn-default">
+			<i class="fa fa-refresh"></i><span class="hidden-sm hidden-xs"> Refrescar</span>
+		</button>
+		<button ng-click="vm.openConfirmModal()" ng-show="vm.acl.del && vm.cfg.showDelete" ng-disabled="!vm.selected || vm.busy" type="button" class="btn btn-default">
+			<i class="fa fa-trash"></i><span class="hidden-sm hidden-xs"> Eliminar</span>
+		</button>
+	</div>
+	
+	<div class="form-group col-sm-6">
+		<form  ng-show="vm.cfg.showSearch" name="searchMedicoForm" class="form-inline">
+			<div class="form-group">
+				<div class="input-group">
+					<input ng-keypress="vm.searchKey($event)" ng-model="vm.search" type="text" class="form-control" name="search" placeholder="Buscar Examen" required>
+					<div ng-click="vm.clearSearch()" ng-show="!searchMedicoForm.search.$error.required" class="input-group-addon" style="cursor: pointer;"><i class="fa fa-times"></i></div>
+				</div>
+			</div>
+			<button ng-click="vm.doSearch()" ng-disabled="vm.busy" type="button" class="btn btn-primary">
+				<span><i class="fa fa-search"></i> Buscar</span>
+			</button>
+			<span ng-show="vm.busy" class="pull-right wi-busy-icon"><i class="fa fa-spinner fa-pulse"></i></span>
+			<button ng-show="vm.error" uib-popover="{{vm.error}}" popover-trigger="click" popover-placement="left" popover-is-open="vm.error != false" type="button" class="btn btn-danger pull-right">
+				<i class="fa fa-exclamation-triangle"></i>
+			</button>
+		</form>
+	</div>
+</div>

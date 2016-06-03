@@ -8,21 +8,13 @@
 
  // @todo: Explicar la arquitectura del modulo
 
-angular.module('wi.contact.search', ['wi.bar.mainGridBar'])
+(function() {
+    'use strict';
+    
+	angular
+		.module('wi.contact.search', [
+	      // @todo: Comment dependencies
+	      'wi.bar.mainGridBar'
+	    ]);
 
-
-.controller('ContactSearchCtrl', ['$scope', 'name', function($scope, name) {
-	
-	alert(name);
-	
-	// Event listeners | Manejadores de eventos
-	
-	// Create Event listener
-	$scope.$on('mainGridBar.create', function(event, data) {
-		console.log('Create Event!');
-	});
-	
-	
-}]) // ContactSearchCtrl
-
-;
+})();

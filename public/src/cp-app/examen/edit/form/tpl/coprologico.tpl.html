@@ -1,0 +1,233 @@
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Color:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.color" placeholder="Color">
+	</div>
+	<div class="form-group col-sm-6">
+		
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Consistencia:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.consistencia" placeholder="Consistencia">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>E. coli:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.eColiTrofo" placeholder="E. coli Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.eColiQuist" placeholder="E. coli Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Moco:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.moco" placeholder="Densidad">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>E. histolityca:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.eHistolitycaTrofo" placeholder="E. histolityca Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.eHistolitycaQuist" placeholder="E. histolityca Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Sangre Oculta:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.sangreOculta" placeholder="Sangre Oculta">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>E. nana:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.eNanaTrofo" placeholder="E. nana Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.eNanaQuist" placeholder="E. nana Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Azuc.Reductores:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.azucReductores" placeholder="Azuc.Reductores">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>B. hominis:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.bHominisTrofo" placeholder="B. hominis Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.bHominisQuist" placeholder="B. hominis Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>PH:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.ph" placeholder="PH">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>I. bustchlli:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.iBustchlliTrofo" placeholder="I. bustchlli Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.iBustchlliQuist" placeholder="I. bustchlli Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Grasas:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.grasas" placeholder="Grasas">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>G.lamblia:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.gLambliaTrofo" placeholder="G.lamblia Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.gLambliaQuist" placeholder="G.lamblia Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Levaduras:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.levaduras" placeholder="Levaduras">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>T. hominis:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.tHominisTrofo" placeholder="T. hominis Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.tHominisQuist" placeholder="T. hominis Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Almidon:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.almidon" placeholder="Almidon">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>C. mesnilli:</label>
+		<div class="row">
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Trofo</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.cMesnilliTrofo" placeholder="C. mesnilli Trofo">
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="input-group">
+					<div class="input-group-addon">Quist</div>
+					<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.cMesnilliQuist" placeholder="C. mesnilli Quist">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Leucocitos x C:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.leucocitosXC" placeholder="Leucocitos x C">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Hematies x C:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.hematiesXC" placeholder="Hematies x C">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Mic.Bacteriana:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.micBacteriana" placeholder="Mic.Bacteriana">
+	</div>
+	<div class="form-group col-sm-6">
+		
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Huevos:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.huevos" placeholder="Huevos">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Larvas:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.larvas" placeholder="Larvas">
+	</div>
+</div>

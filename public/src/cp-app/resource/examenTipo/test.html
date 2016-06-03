@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- scripts -->
+		<!-- jquery -->
+		<script src="/components/jquery/dist/jquery.min.js"></script>
+		<!-- Lib Angular -->
+		<script src="/components/angular/angular.min.js"></script>
+		<!-- Lib ngResource -->
+		<script src="/components/angular-resource/angular-resource.min.js"></script>
+	<!-- /scripts -->
+	
+	<!-- app -->
+		<!-- contact resource module -->
+		<script src="/src/resource/cp-examenTipo/examenTipo.mod.js"></script>
+		<!-- contact resource resource -->
+		<script src="/src/resource/cp-examenTipo/examenTipo.res.js"></script>
+	<!-- app -->
+	
+	<!-- Test Script -->
+		<script>
+			/*
+			 * Test Script.
+			 */
+			angular
+				.module('test.module', [
+	                // Inject module to test
+				 	'cp.resource.examenTipo'
+	            ]);
+	            
+	        angular
+	        	.module('test.module')
+	        	.controller('TestCtr', TestCtr);
+	        
+	        // Inject GridBarSrv to modify grid bar configuration
+	        TestCtr.$inject = ['$scope', '$q', 'ExamenTipoResource'];
+	        
+	        function TestCtr ($scope, $q, Resource) {
+	        	/* jshint validthis: true */
+	        	var vm = this;
+	        	
+	        	vm.collection = [];
+	        	vm.entity;
+	        	
+	        	vm.entityId;
+	        	vm.query = '{'+
+	        		'"tipo": ""'+
+	        	'}';
+	        	
+	        	vm.fetchAll = fetchAll;
+	        	vm.fetchId = fetchId;
+	        	vm.create = create;
+	        	vm.edit = edit;
+	        	vm.del = del;
+	        	
+	        	activate();
+	        	
+	        	function activate() {
+	        		vm.fetchAll();
+	        		vm.fetchId();
+	        	} // activate
+	        	
+	        	// Get all data
+	        	function fetchAll() {
+	        		// Query the resource
+	        		Resource.query(
+        				{
+	        				page: 1,
+	        				page_size:10,
+	        				search: null,
+	        				sorts: null
+	        			}
+	        		// On success
+	        		).$promise.then(function(data) {
+	        			// Load result on appropiated var
+	        			vm.collection = data._embedded.examen_tipo;
+        			// On error
+	        		}, function(error) {
+	        			// Alert
+	        			alert('Query method error on Resource.');
+	        		});
+	        	}; // fetch all
+	        	
+	        	// Get one by id
+	        	function fetchId() {
+	        		Resource.get(
+       					{
+	        				id: 2
+	        			}
+      				// On success
+   					).$promise.then(function(data) {
+   						vm.entity = data;
+ 					// On error
+   					}, function(error) {
+	        			// Alert
+	        			alert('Get method error on Resource.');
+   					});
+	        	} // fetchId
+	        	
+	        	function create() {
+	        		var entity = new Resource(angular.fromJson(vm.query));
+	        		Resource.save(entity);
+	        	}
+	        	
+	        	function edit() {
+	        		var entity = new Resource(angular.fromJson(vm.query));
+	        		Resource.update({id: vm.entityId}, entity);
+	        	}
+	        	
+	        	function del() {
+	        		var entity = new Resource(angular.fromJson(vm.query));
+	        		Resource.remove({id: vm.entityId}, entity);
+	        	}
+	        	
+	        }
+		</script>
+	<!-- /Test Script -->
+
+</head>
+<body ng-app="test.module">
+
+	<div ng-controller="TestCtr as vm">
+	
+		<h1>Entity</h1>
+		<p><strong>id:</strong> {{vm.entity.id}}</p>
+		<p><strong>tipo:</strong> {{vm.entity.tipo}}</p>
+
+		<h1>Collection</h1>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>tipo</th>
+			</tr>
+			
+			<tr ng-repeat="entity in vm.collection">
+				<td>{{entity.id}}</td>
+				<td>{{entity.tipo}}</td>
+			</tr>
+		</table>
+		
+		<h1>Create</h1>
+		<form>
+			<input ng-model="vm.entityId"><br>
+			<textarea ng-model="vm.query"></textarea><br>
+			<button ng-click="vm.create()">Create</button>
+			<button ng-click="vm.edit()">Edit</button>
+			<button ng-click="vm.del()">Delete</button>
+		</form>
+		
+	</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

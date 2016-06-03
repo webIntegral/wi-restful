@@ -1,0 +1,15 @@
+/**
+ * Styles for ui grid datagrids
+ */
+.ui-grid-row {
+	cursor: pointer;
+}
+
+.ui-grid-row:hover .ui-grid-cell {
+	background-color: #CCC !important;
+}
+
+/* Vertical center busy icon */
+.wi-busy-icon {
+	padding: 6px 0px;
+}

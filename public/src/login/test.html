@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="test.module">
 <head>
+	<base href="/src/">
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,40 +10,78 @@
     <meta name="author" content="">
     <link rel="icon" href="/assets/img/favicon.png">
     
-    <title>wi.login</title>
+    <title>wi.login.test</title>
     
 	<!-- styles -->
 	    <!-- Bootstrap -->
 	    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
-	    
 	    <!-- fontawesome -->
 	    <link rel="stylesheet" href="/components/components-font-awesome/css/font-awesome.min.css">
+    	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    	<link rel="stylesheet" href="/src/assets/css/ie10-viewport-bug-workaround.css">
     <!-- /styles -->
     
     <!-- app styles -->
-    	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    	<link rel="stylesheet" href="/src/assets/css/ie10-viewport-bug-workaround.css">
-    	<!-- Estilos Template Dashboard -->
+    	<!-- layout -->
+		<link rel="stylesheet" href="/src/assets/css/layout.css">
+		<!-- nav -->
+		<link rel="stylesheet" href="/src/layout/nav/nav.css">
+    	<!-- login -->
 		<link rel="stylesheet" href="/src/login/login.css">
     <!-- /app styles -->
-    
+
 	<!-- scripts -->
 		<!-- jquery -->
 		<script src="/components/jquery/dist/jquery.min.js"></script>
-		<!-- Lib Angular -->
+		<!-- angular -->
 		<script src="/components/angular/angular.min.js"></script>
-		<!-- Lib Satellizer -->
-		<script src="/components/satellizer/satellizer.min.js"></script>
+		<!-- uiBootstrap -->
+		<script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		<script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    	<!-- satellizer -->
+    	<script src="/components/satellizer/satellizer.min.js"></script>
+		<!-- uiRouter -->
+		<script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+		<!-- ngResource -->
+		<script src="/components/angular-resource/angular-resource.min.js"></script>
 	<!-- /scripts -->
 	
-	<!-- app -->
-		<!-- contact resource module -->
-		<script src="/src/login/login.mod.js"></script>
-		<!-- contact resource resource -->
-		<script src="/src/login/login.ctr.js"></script>
-		<!-- auth module -->
-		<script src="/src/oauth/oauth.mod.js"></script>
-	<!-- app -->
+	<!-- layout -->
+		<!-- nav -->
+		<script src="/src/cp-app/layout/nav/nav.mod.js"></script>
+		<script src="/src/cp-app/layout/nav/nav.dir.js"></script>
+	<!--/ Layout -->
+	
+	<!-- Services -->
+    	<!-- wi.oauth -->
+    	<script src="/src/oauth/oauth.mod.js"></script>
+    	<script src="/src/oauth/auth.srv.js"></script>
+	<!-- /Services -->
+	
+	<!-- router -->
+		<!-- wi.blocks.router -->
+    	<script src="/src/blocks/router/router.mod.js"></script>
+    	<script src="/src/blocks/router/router.prv.js"></script>
+	<!-- /router -->
+	
+	<!-- error -->
+		<!-- wi.blocks.error -->
+    	<!--<script src="/src/blocks/error/error.mod.js"></script>
+    	<script src="/src/blocks/error/httpErrorInterceptor.prv.js"></script>-->
+	<!-- /error -->
+	
+	<!-- Resources -->
+		<!-- currentUser -->
+		<script src="/src/resource/currentUser/currentUser.mod.js"></script>
+		<script src="/src/resource/currentUser/currentUser.res.js"></script>
+	<!-- Resources -->
+	
+	<!-- login -->
+    	<!-- wi.login -->
+    	<script src="/src/login/login.mod.js"></script>
+    	<script src="/src/login/login.routes.js"></script>
+    	<script src="/src/login/login.ctr.js"></script>
+	<!-- login -->
 	
 	<!-- Test Script -->
 		<script>
@@ -52,21 +91,149 @@
 			angular
 				.module('test.module', [
 	                // Inject modules to test
-	                'wi.login'
+	                'wi.blocks.router',
+	                'wi.login',
+	                'wi.oauth',	
+	                'wi.resource.currentUser'
+	                /*
+	                'wi.blocks.error',
+	                */
 	            ]);
 	            
 	        angular
 	        	.module('test.module')
+	        	.run(moduleRun)
 	        	.controller('TestCtr', TestCtr);
 	        
+	        moduleRun.$inject = ['$rootScope', '$state', 'routerHelper'];
+        	/* @ngInject */
+        	function moduleRun($rootScope, $state, routerHelper) {
+        		
+        		// Load route definitions
+        	    routerHelper.configureStates(getStates(), '/');
+        		
+        	  	//~ put this in app definition
+        	 	// On route change Event Handler
+        		$rootScope.$on('$stateChangeStart', function(event, to, toParams, from, fromParams) {
+        			
+        			// Check if login is required for this state
+        			if (true === to.access.login) {
+        				
+        				// Check if user is logged in
+        				
+        					// if it is, check if route is allowed for user
+        					
+        						// if route is allowed, go to it
+        						
+        						// if not allowed, show page not allowed
+        					
+       					// if is not logged in
+       						
+       						// Save requested route in AuthService
+        					
+	        				// go to login
+	        				event.preventDefault();
+	        				return $state.go('login');
+       				
+        			}
+        			
+        		});
+
+        	};
+        	
+        	function getStates() {
+        		return [
+        		        
+       		        // Main route 
+       		        {
+       		        	state: 'main',
+       		        	config: {
+       		        		url: '/',
+       		        		template: '<div>Main State</div><div ui-view></div>',
+       		        		controller: function() {},
+       		        		controllerAs: 'vm',
+       	        			access: {
+       		                    login: true,
+       		                    allowedRoles: ['Admin']
+       	        			}
+       		        	}
+       		        },
+       		        
+       		        // Secure route
+        	        {
+        	        	state: 'main.secure',
+        	        	config: {
+        	        		url: 'secure',
+       		        		template: '<div>Secure State</div>',
+       		        		controller: function() {},
+       		        		controllerAs: 'vm',
+       	        			access: {
+       		                    login: true,
+       		                    allowedRoles: ['Admin']
+       	        			}
+        	        	}
+        	        },
+        	        
+       		        // Unsecure route
+        	        {
+        	        	state: 'main.unsecure',
+        	        	config: {
+        	        		url: 'unsecure',
+       		        		template: '<div>Unsecure State</div>',
+       		        		controller: function() {},
+       		        		controllerAs: 'vm',
+       	        			access: {
+       		                    login: false,
+       		                    allowedRoles: []
+       	        			}
+        	        	}
+        	        }
+                ];
+        	};
+	        
 	        // Inject GridBarSrv to modify grid bar configuration
+	        /// TestCtr.$inject = ['$scope', '$auth', '$q', 'CurrentUserResource'];
 	        TestCtr.$inject = ['$scope'];
 	        
-	        function TestCtr ($scope) {
+	        ///function TestCtr ($scope, $auth, $q, CurrentUsertResource) {
+        	function TestCtr ($scope) {
 	        	/* jshint validthis: true */
 	        	var vm = this;
+	        		
+	        	/*
+	        	vm.currentUser = {};
+	        	vm.getCurrentUser = getCurrentUser;
+	        	vm.logout = logout;
 	        	
-	        } // TestCtr
+	        	activate();
+	        	
+	        	function activate() {
+	        		vm.getCurrentUser();
+	        	} // activate
+	        	
+				// Retrieve current user
+	        	function getCurrentUser() {
+	        		
+	        		CurrentUsertResource.get(
+	   				
+	   				// On success
+	        		).$promise.then(function(data) {
+	        			vm.currentUser = data;
+	    			// On error
+	        		}, function(error) {
+	        			
+	        		});
+	        	}// getCurrentUser
+	        	
+	        	// Log Out
+	        	function logout() {
+	        		
+	        	}//logout
+	        	
+	        	*/
+	        	
+	        }; // TestCtr
+	        
 		</script>
 	<!-- /Test Script -->
 	
@@ -104,11 +271,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body ng-app="test.module">
-    <div class="container-fluid" ng-controller="TestCtr as vm">
-    
-		<ng-include src="'/src/login/login.tpl.html'"></ng-include>
-
+<body>
+    <div class="container-fluid main">
+    	<div ui-view></div><!-- this is the root view -->
     </div><!-- /.container-fluid -->
 </body>
 </html>

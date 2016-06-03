@@ -10,14 +10,15 @@
     <meta name="author" content="">
     <link rel="icon" href="/assets/img/favicon.png">
     
-    <title>wi.nav test</title>
+    <title>wi.nav.test</title>
     
 	<!-- styles -->
 	    <!-- Bootstrap -->
 	    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
-	    
 	    <!-- fontawesome -->
 	    <link rel="stylesheet" href="/components/components-font-awesome/css/font-awesome.min.css">
+    	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    	<link rel="stylesheet" href="/src/assets/css/ie10-viewport-bug-workaround.css">
     <!-- /styles -->
     
     <!-- app styles -->
@@ -32,9 +33,18 @@
 		<script src="/components/jquery/dist/jquery.min.js"></script>
 		<!-- Angular -->
 		<script src="/components/angular/angular.min.js"></script>
-		<!-- ngResource -->
+		<!-- Lib ngResource -->
+		<script src="/components/angular-resource/angular-resource.min.js"></script>
+		<!-- ngBootstrap -->
 		<script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
 	<!-- /scripts -->
+	
+	<!-- oauth -->
+    	<!-- satellizer -->
+    	<script src="/components/satellizer/satellizer.min.js"></script>
+    	<!-- wi.oauth -->
+    	<script src="/src/oauth/oauth.mod.js"></script>
+	<!-- oauth -->
 	
 	<!-- router -->
 		<!-- uiRouter -->
@@ -43,6 +53,12 @@
     	<script src="/src/blocks/router/router.mod.js"></script>
     	<script src="/src/blocks/router/router.prv.js"></script>
 	<!-- /router -->
+	
+	<!-- resource -->
+		<!-- currentUser -->
+		<script src="/src/resource/logout/logout.mod.js"></script>
+		<script src="/src/resource/logout/logout.res.js"></script>
+	<!-- resource -->
 	
 	<!-- nav -->
 		<!-- wi.nav -->

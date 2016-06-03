@@ -1,0 +1,33 @@
+<div class="page-header">
+	<h3>Médico</h3>
+</div>
+
+<form>
+	<div ng-include="'/src/cp-app/layout/bar/fromButtons.tpl.html'"></div>
+ 	
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<label>Nombre:</label>
+			<input ng-model="vm.entity.nombre" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Nombre">
+		</div>
+		<div class="form-group col-sm-6">
+			<label>Teléfono:</label>
+			<input ng-model="vm.entity.telefono" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Telefono">
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-6">
+			<label>Especialidad:</label>
+			<input ng-model="vm.entity.especialidad" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" type="text" class="form-control" placeholder="Especialidad">
+		</div>
+		<div class="form-group col-sm-6">
+			<div class="checkbox">
+				<label>&nbsp;</label><br>
+				<label>
+			    	<input ng-model="vm.entity.activo" ng-change="vm.changed()" ng-click="vm.isEditable($event)" type="checkbox"> ¿Activo?
+			  	</label>
+			</div>		
+		</div>
+	</div>
+</form>

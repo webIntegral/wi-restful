@@ -39,9 +39,6 @@ angular.module('wi.contact.grid', ['ngResource', 'ui.grid', 'ui.grid.autoResize'
 .controller('ContactGridCtrl', ['$scope', '$q', 'uiGridConstants', 'ContactEntity',
 function ($scope, $q, uiGridConstants, ContactEntity) {
 	
-	// @todo: Enable external sorting
-	// @todo: Enable delete button only when data is selected
-	// @todo: Enable collection deleting from datagrid view
 	// @todo: Make unsuscribe when distroy. Check http://stackoverflow.com/questions/11252780/whats-the-correct-way-to-communicate-between-controllers-in-angularjs
 	
 	// Cell template to enable row click event | Cell template para habilitar evento click en cada fila

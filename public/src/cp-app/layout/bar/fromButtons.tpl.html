@@ -1,0 +1,16 @@
+<div class="row wi-form-button-bar">
+	<div class="col-sm-6">
+		<button ng-click="vm.goBack()" ng-show="vm.acl.showGoBack" ng-disabled="vm.busy" type="button" class="btn btn-default">
+			<i class="fa fa-reply"></i><span class="hidden-sm hidden-xs"> Volver</span>
+		</button>
+		<button ng-click="vm.save()" ng-show="vm.acl.allowEdit" ng-disabled="vm.busy" ng-class="vm.hasChanges ? 'btn-success' : ''" type="button" class="btn btn-default">
+			<i class="fa fa-floppy-o"></i><span class="hidden-sm hidden-xs"> Guardar</span>
+		</button>
+	</div>
+	<div class="col-sm-6">
+		<span ng-show="vm.busy" class="pull-right wi-busy-icon"><i class="fa fa-spinner fa-pulse"></i></span>
+		<button ng-show="vm.error" uib-popover="{{vm.error}}" popover-trigger="click" popover-placement="left" popover-is-open="vm.error != false" type="button" class="btn btn-danger pull-right">
+			<i class="fa fa-exclamation-triangle"></i>
+		</button>
+	</div>
+</div>

@@ -11,11 +11,19 @@
     	</div>
     	<div id="navbar" uib-collapse="navCollapsed" class="navbar-collapse collapse">
       		<ul class="nav navbar-nav navbar-left">
-      			<li><a href="#">Dashboard</a></li>
-        		<li><a href="#">Contacts</a></li>
+      			<li><a ui-sref="main.dashboard"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+        		<li><a href="#"><i class="fa fa-user"></i> Contacts</a></li>
+        		<li><a href="#"><i class="fa fa-bullseye"></i> Conversions</a></li>
+        		
       		</ul>
       		<ul class="nav navbar-nav navbar-right">
-        		<li><a ui-sref="login">Login</a></li>
+          		<li uib-dropdown>
+            		<a href="#" uib-dropdown-toggle><i class="fa fa-user"></i> User <b class="caret"></b></a>
+            		<ul class="uib-dropdown-menu">
+	              		<li><a href="#"><i class="fa fa-gear"></i> Config</a></li>
+		              	<li><a href="#" ng-click="vm.logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
+            		</ul>
+          		</li>
       		</ul>
     	</div>
   	</div>

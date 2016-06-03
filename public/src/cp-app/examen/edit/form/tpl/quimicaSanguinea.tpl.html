@@ -1,0 +1,78 @@
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Glicemia <small>( 70 - 105 mg/dl )</small> :</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.glicemia" placeholder="Glicemia">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Colesterol <small>( < 250 mg/dl )</small> :</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.colesterol" placeholder="Colesterol">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Trigliceridos <small>( < 150 mg/dl )</small> :</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.trigliceridos" placeholder="Trigliceridos">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>HDL:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.hdl" placeholder="HDL">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>LDL:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.ldl" placeholder="LDL">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>Ac. Úrico:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.acUrico" placeholder="Ac. Úrico">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Creatinina:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.creatinina" placeholder="Creatinina">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>N. Ureico:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.nUreico" placeholder="N. Ureico">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Curva de Glicemia:</label>
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>Ayunas:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.ayunas" placeholder="Ayunas">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>1 Hora:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.unaHora" placeholder="1 Hora">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-6">
+		<label>2 Horas:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.dosHoras" placeholder="2 Horas">
+	</div>
+	<div class="form-group col-sm-6">
+		<label>3 Horas:</label>
+		<input type="text" class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.tresHoras" placeholder="3 Horas">
+	</div>
+</div>
+
+<div class="row">
+	<div class="form-group col-sm-12">
+		<label>Observaciones:</label>
+		<textarea class="form-control" ng-change="vm.changed()" ng-keypress="vm.isEditable($event)" ng-model="vm.entity.examen.observaciones" placeholder="Observaciones"></textarea>
+	</div>
+</div>

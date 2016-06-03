@@ -1,0 +1,117 @@
+	<div class="page-header">
+		<h4>Role ACL</h4>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.access" ng-change="vm.changed()" ng-click="" type="checkbox"> Access Module
+			    	<br><span class="small">Allow access to module?</span>
+			  	</label>
+			</div>		
+		</div>
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.incMenu" ng-change="vm.changed()" ng-click="" type="checkbox"> Include in Menu
+			    	<br><span class="small">Include module in menu?</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.search" ng-change="vm.changed()" ng-click="" type="checkbox"> Search
+			    	<br><span class="small">Allow access to search grid? (search all)</span>
+			  	</label>
+			</div>		
+		</div>
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.searchOwn" ng-change="vm.changed()" ng-click="" type="checkbox"> Search Own Only
+			    	<br><span class="small">Limit search to own entities (createdBy or assigned)?</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.create" ng-change="vm.changed()" ng-click="" type="checkbox"> Create
+			    	<br><span class="small">Allow create new entities?</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.edit" ng-change="vm.changed()" ng-click="" type="checkbox"> Edit
+			    	<br><span class="small">Allow edit existing entities?</span>
+			  	</label>
+			</div>		
+		</div>
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.editOwn" ng-change="vm.changed()" ng-click="" type="checkbox"> Edit Own
+			    	<br><span class="small">Limit edit to own entities (createdBy or assigned)?</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.del" ng-change="vm.changed()" ng-click="" type="checkbox"> Delete
+			    	<br><span class="small">Allow delete entities? (All)</span>
+			  	</label>
+			</div>		
+		</div>
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.delOwn" ng-change="vm.changed()" ng-click="" type="checkbox"> Delete Own
+			    	<br><span class="small">Limit delete to own entities (createdBy or assigned)?</span>
+			  	</label>
+			</div>		
+		</div>
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.delDefinitive" ng-change="vm.changed()" ng-click="" type="checkbox"> Delete Definitely
+			    	<br><span class="small">Delete garbash can? (not softdelete)</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.hideField" ng-change="vm.changed()" ng-click="" type="checkbox"> Hide Field
+			    	<br><span class="small">Hide field? (do not show field)</span>
+			  	</label>
+			</div>		
+		</div>
+		<div class="form-group col-sm-4">
+			<div class="checkbox">
+				<label>
+			    	<input ng-model="vm.entity.roleAcl.lockField" ng-change="vm.changed()" ng-click="" type="checkbox"> Lock Field
+			    	<br><span class="small">Lock field? (do not allow field edition)</span>
+			  	</label>
+			</div>		
+		</div>
+	</div>

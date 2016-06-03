@@ -3,7 +3,9 @@
 	
 	angular
 		.module('wi.oauth', [
-		    'satellizer'
+		    'satellizer',
+		    'wi.resource.currentUser',	// Get current user (authenticated user)
+		    // 'wi.resource.logout'		// Logout on server (delete token)
         ])
         
         // Configure auth provider

@@ -131,6 +131,7 @@
 	    		background-color: #CCC !important;
 	  		}
 	  		
+	  		/* delete after bar relocate. */
 			.wi-grid-bar {
 				margin-bottom: 5px;
 			}
@@ -148,7 +149,7 @@
 		<script src="/components/angular-ui-grid/ui-grid.min.js"></script>
 		
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-			<script>
+		<script>
 			/*!
 			 * IE10 viewport hack for Surface/desktop Windows 8 bug
 			 * Copyright 2014-2015 Twitter, Inc.
@@ -177,6 +178,9 @@
 	<!-- /scripts -->
 	
 	<!-- app -->
+		<!-- main nav module -->
+		<script src="/src/commons/navigation/mainNav/mainNav.mod.js"></script>
+		<!-- grid module -->
 		<script src="/src/contact/grid/contactGrid.mod.js"></script>
 	<!-- app -->
 	
@@ -187,7 +191,7 @@
     <![endif]-->
 </head>
 <body ng-app="wi.contact.grid">
-    <nav class="navbar navbar-default navbar-fixed-top" ng-include="'/src/commons/navigation/mainNav.tpl.html'"></nav>
+    <nav class="navbar navbar-default navbar-fixed-top" ng-include="'/src/commons/navigation/mainNav/mainNav.tpl.html'"></nav>
 
     <div class="container-fluid">
       <div class="row">

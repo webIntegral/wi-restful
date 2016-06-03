@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- scripts -->
+		<!-- jquery -->
+		<script src="/components/jquery/dist/jquery.min.js"></script>
+		<!-- Lib Angular -->
+		<script src="/components/angular/angular.min.js"></script>
+		<!-- Lib ngResource -->
+		<script src="/components/angular-resource/angular-resource.min.js"></script>
+	<!-- /scripts -->
+	
+	<!-- app -->
+		<!-- contact resource module -->
+		<script src="/src/resource/cp-afiliado/afiliado.mod.js"></script>
+		<!-- contact resource resource -->
+		<script src="/src/resource/cp-afiliado/afiliado.res.js"></script>
+	<!-- app -->
+	
+	<!-- Test Script -->
+		<script>
+			/*
+			 * Test Script.
+			 */
+			angular
+				.module('test.module', [
+	                // Inject module to test
+				 	'cp.resource.afiliado'
+	            ]);
+	            
+	        angular
+	        	.module('test.module')
+	        	.controller('TestCtr', TestCtr);
+	        
+	        // Inject GridBarSrv to modify grid bar configuration
+	        TestCtr.$inject = ['$scope', '$q', 'AfiliadoResource'];
+	        
+	        function TestCtr ($scope, $q, Resource) {
+	        	/* jshint validthis: true */
+	        	var vm = this;
+	        	
+	        	vm.collection = [];
+	        	vm.entity;
+	        	vm.entityAfiliado;
+	        	
+	        	vm.entityId;
+	        	vm.query = '{'+
+	        		'"tipoDocumento": "", '+
+	        		'"numeroDocumento": "", '+
+	        		'"nombre": "", '+
+	        		'"primerApellido": "", '+
+	        		'"segundoApellido": ""'+
+	        	'}';
+	        	
+	        	vm.create = create;
+	        	vm.edit = edit;
+	        	vm.del = del;
+	        	
+	        	activate();
+	        	
+	        	function activate() {
+	        		fetchAll();
+	        		fetchId();
+	        		getAfiliado();
+	        	} // activate
+	        	
+	        	function getAfiliado() {
+	        		Resource.query({
+	        			tipoDocumento: '2',
+	        			numeroDocumento: '98713314'
+	        		})
+	        		// On success
+	        		.$promise.then(function(data) {
+	        			
+	        			vm.entityAfiliado = data._embedded.afiliado[0];
+	        			
+	        		}, function(error) {
+	        			// Alert
+	        			alert('Query method error on Resource.');
+	        		});
+	        	}
+	        	
+	        	// Get all data
+	        	function fetchAll() {
+	        		// Query the resource
+	        		Resource.query(
+        				{
+	        				page: 1,
+	        				page_size:10,
+	        				search: null,
+	        				sorts: null
+	        			}
+	        		// On success
+	        		).$promise.then(function(data) {
+	        			// Load result on appropiated var
+	        			vm.collection = data._embedded.afiliado;
+        			// On error
+	        		}, function(error) {
+	        			// Alert
+	        			alert('Query method error on Resource.');
+	        		});
+	        	}; // fetch all
+	        	
+	        	// Get one by id
+	        	function fetchId() {
+	        		Resource.get(
+       					{
+	        				id: 3
+	        			}
+      				// On success
+   					).$promise.then(function(data) {
+   						vm.entity = data;
+ 					// On error
+   					}, function(error) {
+	        			// Alert
+	        			alert('Get method error on Resource.');
+   					});
+	        	} // fetchId
+	        	
+	        	function create() {
+	        		var entity = new Resource(angular.fromJson(vm.query));
+	        		Resource.save(entity);
+	        	}
+	        	
+	        	function edit() {
+	        		var entity = new Resource(angular.fromJson(vm.query));
+	        		Resource.update({id: vm.entityId}, entity);
+	        	}
+	        	
+	        	function del() {
+	        		var entity = new Resource(angular.fromJson(vm.query));
+	        		Resource.remove({id: vm.entityId}, entity);
+	        	}
+	        	
+	        }
+		</script>
+	<!-- /Test Script -->
+
+</head>
+<body ng-app="test.module">
+
+	<div ng-controller="TestCtr as vm">
+	
+		<h1>Entity by id</h1>
+		<p><strong>id:</strong> {{vm.entity.id}}</p>
+		<p><strong>tipoDocumento:</strong> {{vm.entity.tipoDocumento}}</p>
+		<p><strong>numeroDocumento:</strong> {{vm.entity.numeroDocumento}}</p>
+		<p><strong>nombre:</strong> {{vm.entity.nombre}}</p>
+		<p><strong>primerApellido:</strong> {{vm.entity.primerApellido}}</p>
+		<p><strong>segundoApellido:</strong> {{vm.entity.segundoApellido}}</p>
+		
+		<h1>Entity by tipoDocumento and numeroDocumento</h1>
+		<p><strong>id:</strong> {{vm.entityAfiliado.id}}</p>
+		<p><strong>tipoDocumento:</strong> {{vm.entityAfiliado.tipoDocumento}}</p>
+		<p><strong>numeroDocumento:</strong> {{vm.entityAfiliado.numeroDocumento}}</p>
+		<p><strong>nombre:</strong> {{vm.entityAfiliado.nombre}}</p>
+		<p><strong>primerApellido:</strong> {{vm.entityAfiliado.primerApellido}}</p>
+		<p><strong>segundoApellido:</strong> {{vm.entityAfiliado.segundoApellido}}</p>
+
+		<h1>Collection</h1>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>tipo documento</th>
+				<th>numero documento</th>
+				<th>nombre</th>
+				<th>primer apellido</th>
+				<th>segundo apellido</th>
+			</tr>
+			
+			<tr ng-repeat="entity in vm.collection">
+				<td>{{entity.id}}</td>
+				<td>{{entity.tipoDocumento}}</td>
+				<td>{{entity.numeroDocumento}}</td>
+				<td>{{entity.nombre}}</td>
+				<td>{{entity.primerApellido}}</td>
+				<td>{{entity.segundoApellido}}</td>
+			</tr>
+		</table>
+		
+		<h1>Create</h1>
+		<form>
+			<input ng-model="vm.entityId"><br>
+			<textarea ng-model="vm.query"></textarea><br>
+			<button ng-click="vm.create()">Create</button>
+			<button ng-click="vm.edit()">Edit</button>
+			<button ng-click="vm.del()">Delete</button>
+		</form>
+		
+	</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

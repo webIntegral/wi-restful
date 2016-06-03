@@ -1,3 +1,11 @@
+/**
+ * wi.login
+ * 
+ * WiLoginCtr
+ * 
+ * Login Form Controller
+ * 
+ */
 (function() {
 	'use strict';
 	
@@ -6,77 +14,89 @@
 		.controller('WiLoginCtr', WiLoginCtr);
 	
 	// Inject dependencies
-	WiLoginCtr.$inject = ['$scope', '$q', '$auth'];
+	WiLoginCtr.$inject = ['$scope', '$q', 'AuthService'];
 	
 	// Controller definition
-	function WiLoginCtr($scope, $q, $auth) {
+	function WiLoginCtr($scope, $q, AuthService) {
     	/* jshint validthis: true */
     	var vm = this;
     	
-    	// User credentials
-    	vm.user = {
- 		    grant_type: 'password',
- 		    username: '',
- 		    password: '',
- 		    client_id: 'restful-wi'
-    	};
-    	
-    	// Error Msg
-    	vm.errorMsg = '';
-    	
-    	// flag to show 
+    	// flags
+    	vm.busy = false;
     	vm.error = false;
     	
-    	// flag to show that request is being sent
-    	vm.signing = false;
+    	// Init empty credentials
+    	vm.credentials = {
+ 		    username: '',
+ 		    password: ''
+    	};
     	
+    	// Bindables
     	vm.login = login;
     	
+    	activate();
     	
-    	// Login action
+    	///////////
+    	
+    	/*
+    	 * Activate Controller
+    	 */
+    	function activate() {
+    		
+    	}
+
+    	// Login click
     	function login() {
-    			
-    		// Clean error msg
-    		vm.errorMsg = '';
-			// set signing in flag
-			vm.signing = true;
-			// unset error flag
-			vm.error = false;
-			
-			// Request login to server
-    		$auth.authenticate( 'restful-wi', vm.user )
-            	.then( function( response ) {
-            		
-            		// unset signing in flag
-        			vm.signing = false;
-        			
-        			console.log('Success. Script should redirect to somewhere else now.');
-            		
-          		// Redirect to app root, in
-              	// window.location.href = '/';
-            })
-            .catch(function(error) {
-            	
-            	switch (error.status) {            	
-	            	// Invalid grant
-					case 401:
-						vm.errorMsg = error.data.detail;
-						break;
-					
-					// Everything else
-					default:
-						vm.errorMsg = "Sorry, It seems the server is not avaliable at the moment.";
-						break;
-				}
-            	
-            	// set error flag
-            	vm.error = true;
-            	// unset signing in flag
-    			vm.signing = false;
-            });
-	    		
+    		// Get busy
+    		getBusy();
+    		
+    		authenticate().then(function(data) {
+    			vm.busy = false;
+    		}, function(error) {
+    			// Show error
+				vm.error = error;
+    			vm.busy = false;
+    		});
     	}
     	
+    	///////////
+    	
+    	// Authenticate
+    	function authenticate() {
+    		return $q(function(resolve, reject) {
+    			// Request Login
+    			AuthService.login(vm.credentials)
+    				// On success
+    				.then(function(data) {
+    					
+    				// On error
+    				}, function(error) {
+        				// return appropiated error message
+        				var errorMsg;
+        				switch (error.status) {
+        					
+        					case '50x':
+        						// TODO: Handle login error 
+        					
+    						default:
+    							errorMsg = 'Error al intentar autenticarse.';
+    							break;
+    					}
+        				// reject
+        				reject(errorMsg);
+    			}); // login
+    		});
+    	}
+    	
+    	/*
+    	 * get Busy
+    	 */
+    	function getBusy() {
+    		// Clean errors
+    		vm.error = false;
+    		// Get busy
+    		vm.busy = true;
+    	} // getBusy
     	
     	
 	} // WiLoginCtr
