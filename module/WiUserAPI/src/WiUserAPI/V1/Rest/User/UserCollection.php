@@ -19,21 +19,124 @@ class UserCollection extends EntityRepository
      */
     public function pageBy($params = array())
     {
-        // Table names
+    
+        // Table name | Nombres de las tablas
         $tbl1 = 'user';
-        $tbl2 = 'accesstoken_oauth2';
+    
+        // Fields that allow search
+        $searchables = array(
+            'id' => $tbl1 . '.id',
+            'username' => $tbl1. '.username',
+            'displayName' => $tbl1. '.displayName'
+        );
         
-        // Query builder instance creation
-        $qb = $this->createQueryBuilder("$tbl1")
-            ->select('user')
-            #->join($tbl1.'.id', 't1', 'WITH', $tbl2.'.user_id = t1.id')
-            ->join('accesstoken_oauth2', 't', 'WITH', 'user.id = ?1', 't.user_id')
+        // Fields that allow sorting
+        $sortables = array(
+            'id' => $tbl1 . '.id',
+            'username' => $tbl1. '.username',
+            'displayName' => $tbl1. '.displayName'
+        );
+        
+        // Fields that allow filters
+        $filterables = array(
             
-            #->innerJoin('c.phones', 'p', 'WITH', 'p.phone = :phone')
-            #->join($tbl1.'.id', $tbl2)
-        ;
+        );
+    
+        // Create query builder
+        $qb = $this->createQueryBuilder("$tbl1")
+            ->select("partial $tbl1.{id, username, displayName, email, role, deleted, created, updated}");    // select all tables
+    
+        // Build Search
+        
+        // If search parameter is set
+        if (property_exists($params, 'search')) {
+            // If serach is not empty (empty resets search)
+            if ('' != $params->search) {
+        
+                // Clean search string
+                $searchStr = '%' . preg_replace("/[^a-zA-Z0-9áéíóúüÁÉÍÓÚÜ',.@&_-]+/", "", $params->search) . '%';
+                // Init query builder search expression
+                $searchExpr = $qb->expr()->orX();
+                
+                // For each field
+                $i = 1;
+                foreach ($searchables as $field => $column) {
+                    // Add field and search
+                    $searchExpr->add($qb->expr()->like($column, "?$i"));
+                    $qb->setParameter($i, $searchStr);
+                    
+                    // Count
+                    $i = $i + 1;
+                } // foreach
+                
+                // Add Where clause
+                $qb->andWhere($searchExpr);
+        
+            } // if
+        } // if
+        
+        // Build filters
+        
+        // If filters is set
+        if (property_exists($params, 'filters')) {
+        
+            // Decode json_string
+            $filters = json_decode($params->filters);
+            // Init query builder filter expression
+            $filterExpr = $qb->expr()->andX();
+        
+            // for each filter
+            $i = 1;
+            foreach ($filters as $filter => $value) {
+                // If field can be filtered
+                if (array_key_exists($filter, $filterables)) {
+                    // Add filter and value
+                    $filterExpr->add($qb->expr()->eq($filterables[$filter], "?$i"));
+                    $qb->setParameter($i, $value);
+        
+                    // Count
+                    $i = $i + 1;
+                }
+            }
+            
+            // Add Where clause
+            $qb->andWhere($filterExpr);
+        }
+        
+        // Build Sorts
+        
+        // If sorts are set
+        if (property_exists($params, 'sorts')) {
+            
+            // Decode json_string
+            $sorts = json_decode($params->sorts);
+            
+            // for each sort
+            $i = 1;
+            foreach ($sorts as $sort => $dir) {
+                // If field is sortable
+                if (array_key_exists($sort, $sortables)) {
+                    // If sort direction is valid
+                    if (strtoupper($dir) === 'ASC' || strtoupper($dir) === 'DESC') {
+                        
+                        // other rounds addOrderBy
+                        if ($i > 1) {
+                            $qb->addOrderBy($sortables[$sort], $dir);
+                            // first round addOrder
+                        } else {
+                            $qb->orderBy($sortables[$sort], $dir);
+                        }
+                        
+                        // Count
+                        $i = $i + 1;
+                    } // if
+                } // if
+            } // foreach
+            
+        } // if
         
         // Return new ZendPaginator | Devolver un nuevo paginador
         return new ZendPaginator(new PaginatorAdapter(new ORMPaginator($qb)));
-    }
+        
+    } // function pageBy
 }

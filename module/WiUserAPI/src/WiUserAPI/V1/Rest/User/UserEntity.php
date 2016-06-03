@@ -4,17 +4,22 @@ namespace WiUserAPI\V1\Rest\User;
 use ZF\OAuth2\Doctrine\Entity\UserInterface;
 use Zend\Stdlib\ArraySerializableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Zend\Crypt\Password\Bcrypt;
 
 /**
  * @ORM\Entity(repositoryClass="WiUserAPI\V1\Rest\User\UserCollection")
  * @ORM\Table(name="user")
+ * @Gedmo\SoftDeleteable(fieldName="deleted", timeAware=false)
  */
 class UserEntity implements UserInterface, ArraySerializableInterface
 {
+
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     *
+     * @var int @ORM\Id
+     *      @ORM\GeneratedValue(strategy="AUTO")
+     *      @ORM\Column(type="integer")
      */
     protected $id;
 
@@ -43,6 +48,34 @@ class UserEntity implements UserInterface, ArraySerializableInterface
      */
     protected $state;
 
+    /**
+     * @var WiUserAPI\V1\Rest\Role\RoleEntity @ORM\ManyToOne(targetEntity="WiUserAPI\V1\Rest\Role\RoleEntity", inversedBy="users", fetch="EAGER")
+     */
+    protected $role;
+
+    /**
+     * Deletion datetime
+     *
+     * @var \DateTime @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $deleted;
+
+    /**
+     * Creation datetime
+     *
+     * @var \DateTime @Gedmo\Timestampable(on="create")
+     *      @ORM\Column(type="datetime")
+     */
+    protected $created;
+
+    /**
+     * Update datetime
+     *
+     * @var \DateTime @Gedmo\Timestampable(on="update")
+     *      @ORM\Column(type="datetime")
+     */
+    protected $updated;
+
     protected $client;
 
     protected $accessToken;
@@ -64,6 +97,9 @@ class UserEntity implements UserInterface, ArraySerializableInterface
                 case 'username':
                     $this->setUsername($value);
                     break;
+                case 'displayName':
+                    $this->setDisplayName($value);
+                    break;
                 case 'password':
                     $this->setPassword($value);
                     break;
@@ -80,6 +116,12 @@ class UserEntity implements UserInterface, ArraySerializableInterface
                 case 'phoneNumber':
                     $this->setPhone($value);
                     break;
+                case 'role':
+                    $this->setRole($value);
+                    break;
+                case 'deleted':
+                    $this->setDeleted($value);
+                    break;
                 default:
                     break;
             }
@@ -92,11 +134,17 @@ class UserEntity implements UserInterface, ArraySerializableInterface
         return array(
             'id' => $this->getId(),
             'username' => $this->getUsername(),
+            'displayName' => $this->getDisplayName(),
+            'password' => $this->getPassword(),
             'profile' => $this->getProfile(),
             'email' => $this->getEmail(),
             'country' => $this->getCountry(),
             'phone_number' => $this->getPhoneNumber(), // underscore formatting for openid
-            'phoneNumber' => $this->getPhoneNumber()
+            'phoneNumber' => $this->getPhoneNumber(),
+            'role' => $this->getRole(),
+            'created' => $this->getCreated(),
+            'updated' => $this->getUpdated(),
+            'deleted' => $this->getDeleted()
         );
     }
 
@@ -137,16 +185,13 @@ class UserEntity implements UserInterface, ArraySerializableInterface
     }
 
     /**
-     * Disable getPassword method to prevent
-     * anyone to get the password
+     *
      * @return the $password
      */
-    /*
     public function getPassword()
     {
         return $this->password;
     }
-    */
 
     /**
      *
@@ -154,7 +199,16 @@ class UserEntity implements UserInterface, ArraySerializableInterface
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $bcrypt = new Bcrypt();
+        $this->password = $bcrypt->create($password);
+    }
+    
+    /**
+     * This method allows to clear password to avoid return it on api services
+     */
+    public function unsetPassword() 
+    {
+        $this->password = '';
     }
 
     /**
@@ -209,6 +263,60 @@ class UserEntity implements UserInterface, ArraySerializableInterface
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    /**
+     *
+     * @return the $role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     *
+     * @param field_type $role            
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     *
+     * @return the $deleted
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     *
+     * @param DateTime $deleted            
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    }
+
+    /**
+     *
+     * @return the $created
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     *
+     * @return the $updated
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**
@@ -336,5 +444,4 @@ class UserEntity implements UserInterface, ArraySerializableInterface
     {
         $this->phoneNumber = $phoneNumber;
     }
-    
 }

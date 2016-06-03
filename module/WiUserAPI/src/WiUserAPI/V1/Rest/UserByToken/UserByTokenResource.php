@@ -67,7 +67,7 @@ class UserByTokenResource extends AbstractResourceListener implements ServiceLoc
         
         // If user is Guest, throw 401 Anuthorized
         if (is_a($identity, 'ZF\MvcAuth\Identity\GuestIdentity')) {
-            return new ApiProblem(401, "This method can't be used by a Guest user");
+            return new ApiProblem(401, "UserByToken Get method can't be used by a Guest user");
         }
         
         // Get userId
@@ -77,6 +77,9 @@ class UserByTokenResource extends AbstractResourceListener implements ServiceLoc
         // Get Authenticated user
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         $user = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->find($userId);
+        
+        // Unset Password to prevent anyone from see it
+        $user->unsetPassword();
         
         // Return user
         return $user;

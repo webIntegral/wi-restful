@@ -17,7 +17,23 @@ class UserResource extends AbstractResourceListener implements ServiceLocatorAwa
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        // Get entity manager and Doctrine Hydrator 
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $hydrator = new DoctrineHydrator($em);
+        
+        // Decode json data
+        $dataArray = json_decode(json_encode($data), true);
+        
+        // Create new entity and hydrate data
+        $entity = new UserEntity();
+        $entity = $hydrator->hydrate($dataArray, $entity);
+        
+        // Execute
+        $em->persist($entity);
+        $em->flush();
+        
+        // Return new created entity
+        return $entity;
     }
 
     /**
@@ -28,7 +44,24 @@ class UserResource extends AbstractResourceListener implements ServiceLocatorAwa
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        /*
+         * @todo: Antes de borrar, verificar si el registro no está ya borrado.
+         * Tener en cuenta que si el registro está virtualmente borrado, borrarlo nuevamente
+         * lo borrará de la base de datos. Esto solo lo debería de hacer alguien con privilegios altos.
+         */
+        
+        // Get entity manager
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+        // Get the entity
+        $entity = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->find($id);
+        
+        // Remove the entity
+        $em->remove($entity);
+        $em->flush();
+        
+        // Return true for success
+        return true;
     }
 
     /**
@@ -50,7 +83,19 @@ class UserResource extends AbstractResourceListener implements ServiceLocatorAwa
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        // Get entity manager
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+        // Enable Softdeleteable filter
+        $em->getFilters()->enable('soft-deleteable');
+        
+        // Get the entity
+        $entity = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->find($id);
+        // Do not return password
+        $entity->unsetPassword();
+        
+        // Return it
+        return $entity;
     }
 
     /**
@@ -63,9 +108,12 @@ class UserResource extends AbstractResourceListener implements ServiceLocatorAwa
     {
         // Get entity manager
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        // Enable Softdeleteable filter
+        $em->getFilters()->enable('soft-deleteable');
         
         // Get paged collection
-        $collection = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->findAll($params);
+        $collection = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->pageBy($params);
         
         return $collection;
     }
@@ -102,7 +150,26 @@ class UserResource extends AbstractResourceListener implements ServiceLocatorAwa
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        // Get entity manager and Doctrine Hydrator 
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $hydrator = new DoctrineHydrator($em);
+        
+        // Enable Softdeleteable filter
+        $em->getFilters()->enable('soft-deleteable');
+        
+        // Decode json data
+        $dataArray = json_decode(json_encode($data), true);
+        
+        // Get entity by id and hydrate data
+        $entity = $em->getRepository('WiUserAPI\V1\Rest\User\UserEntity')->find($id);
+        $entity = $hydrator->hydrate($dataArray, $entity);
+        
+        // Execute
+        $em->persist($entity);
+        $em->flush();
+        
+        // Return new created entity
+        return $entity;
     }
     
     /**
